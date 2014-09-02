@@ -69,7 +69,7 @@ public class Solution {
         Double x;
         Double y;
         Integer id;
-        Integer i =0;
+        Integer topicsAddedSoFar =0;
         QuoraData tempTopic;
         this.topicsFromInputArray = new QuoraData[inputTopics.size()];
         for (String topic : inputTopics) {
@@ -103,8 +103,8 @@ public class Solution {
             //this.topicsFromInput.add(new Topic(id,x,y));
             tempTopic = new QuoraData(id, x, y);
             this.topicsFromInput.put(id, tempTopic);
-            this.topicsFromInputArray[i] = tempTopic;
-            i++;
+            this.topicsFromInputArray[topicsAddedSoFar] = tempTopic;
+            topicsAddedSoFar++;
         }
         returnValue = true;
         return returnValue;
@@ -236,7 +236,7 @@ public class Solution {
     }
 
     public void runQueries() {
-        Integer i =0;
+        //Integer i =0;
         List<Integer> toPrint;
         for(Query query:queriesFromInput) {
             if(query.type.equalsIgnoreCase("t")) {
@@ -365,7 +365,7 @@ public class Solution {
         Double calculatedDistance;
         Distance[] unorderedArray;// = new Distance[this.topicsFromInput.size()];
         Hashtable<Integer, Distance> hashTableOfMinDistancesForQuestion = new Hashtable<Integer, Distance>();
-        Integer i=0;
+        Integer dataAddSoFar=0;
         Enumeration<Integer> enumKey;
 
         QuoraData topic;
@@ -392,19 +392,19 @@ public class Solution {
             while(enumKey.hasMoreElements()) {
                 Integer key = enumKey.nextElement();
                 Distance val = hashTableOfMinDistancesForQuestion.get(key);
-                unorderedArray[i]=val;
-                i++;
+                unorderedArray[dataAddSoFar]=val;
+                dataAddSoFar++;
             }
         } else {
             unorderedArray = new Distance[this.topicsFromInput.size()];
             for(int k=0; k< this.topicsFromInputArray.length; k++) {
                 topic = this.topicsFromInputArray[k];
                 calculatedDistance = Math.sqrt((topic.cords.getX() - center.getX()) * (topic.cords.getX() - center.getX()) + (topic.cords.getY() - center.getY()) * (topic.cords.getY() - center.getY()));
-                unorderedArray[i] = new Distance(calculatedDistance, topic);
-                i++;
+                unorderedArray[dataAddSoFar] = new Distance(calculatedDistance, topic);
+                dataAddSoFar++;
             }
         }
-        return  Arrays.copyOf(unorderedArray,i);
+        return  Arrays.copyOf(unorderedArray,dataAddSoFar);
     }
 
     public List<Distance> calculateTopicDistances3(Point2D.Double center, Integer kthSmallest,Boolean question) {
@@ -463,6 +463,7 @@ public class Solution {
         Integer numTopics;
         Integer numQuestions;
         Integer numQueries;
+
         Solution sol = new Solution();
         List<String> inputFromQuora = new ArrayList<String>();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -486,6 +487,7 @@ public class Solution {
         sol.validateInput(inputFromQuora);
         sol.runQueries();
     }
+
 
     public class QuoraData implements Comparable<QuoraData>{
         Integer id;
