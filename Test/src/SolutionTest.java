@@ -4,6 +4,7 @@ import org.junit.rules.ExpectedException;
 import java.awt.geom.Point2D;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -837,13 +838,38 @@ public class SolutionTest {
         returnedValue = testInput.validateInput(input);
         testInput.runQueries();
     }
-/*
+
     @org.junit.Test
     public void testStressEndToEnd3() throws Exception {
+        Boolean expectedValue = true;
+        Boolean returnedValue;
+        Solution testInput = new Solution();
+        List<String> input = new ArrayList<String>();
+        BufferedReader br = new BufferedReader(new FileReader("specfic.txt"));
+        String line;
+        while ((line = br.readLine()) != null) {
+            input.add(line);
+        }
+        br.close();
+        returnedValue = testInput.validateInput(input);
+        testInput.runQueries();
+    }
+
+    @org.junit.Test
+    public void testStressEndToEnd4() throws Exception {
         Process p;
+        StringBuffer output = new StringBuffer();
         try {
-            p = Runtime.getRuntime().exec("./generateTestFile.py > 6testInput.txt");
+            p = Runtime.getRuntime().exec("./gen.sh");
             p.waitFor();
+
+            BufferedReader reader =
+                    new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+            String line = "";
+            while ((line = reader.readLine())!= null) {
+                output.append(line + "\n");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -860,5 +886,5 @@ public class SolutionTest {
         returnedValue = testInput.validateInput(input);
         testInput.runQueries();
     }
-    */
+
 }

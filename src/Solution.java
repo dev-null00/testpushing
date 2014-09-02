@@ -276,45 +276,14 @@ public class Solution {
     }
 
     public Distance[] getUnorderedArrayOfTopics(Point2D.Double center, Boolean question) {
-        Enumeration<Integer> enumKey = this.topicsFromInput.keys();
         Double calculatedDistance;
         Distance[] unorderedArray = new Distance[this.topicsFromInput.size()];
         Integer i=0;
-        //TODO REMOVE
-        Random rand = new Random();
 
         for(int k=0; k< this.topicsFromInputArray.length; k++) {
             Topic topic = this.topicsFromInputArray[k];
             if(topic.questionsForThisTopic.size() >0 & question) {
                 calculatedDistance = Math.sqrt((topic.cords.getX() - center.getX()) * (topic.cords.getX() - center.getX()) + (topic.cords.getY() - center.getY()) * (topic.cords.getY() - center.getY()));
-                //TODO REMOVE
-                //calculatedDistance = rand.nextInt(10000)/100.0 ;
-                unorderedArray[i]=new Distance(calculatedDistance, topic);
-                i++;
-            } else if(!question) {
-                calculatedDistance = Math.sqrt((topic.cords.getX() - center.getX()) * (topic.cords.getX() - center.getX()) + (topic.cords.getY() - center.getY()) * (topic.cords.getY() - center.getY()));
-                unorderedArray[i]=new Distance(calculatedDistance, topic);
-                i++;
-            }
-        }
-        return  Arrays.copyOf(unorderedArray,i);
-    }
-
-    public Distance[] getUnorderedArrayOfTopics2(Point2D.Double center, Boolean question) {
-        Enumeration<Integer> enumKey = this.topicsFromInput.keys();
-        Double calculatedDistance;
-        Distance[] unorderedArray = new Distance[this.topicsFromInput.size()];
-        Integer i=0;
-        //TODO REMOVE
-        Random rand = new Random();
-
-        while(enumKey.hasMoreElements()) {
-            Integer key = enumKey.nextElement();
-            Topic topic = this.topicsFromInput.get(key);
-            if(topic.questionsForThisTopic.size() >0 & question) {
-                calculatedDistance = Math.sqrt((topic.cords.getX() - center.getX()) * (topic.cords.getX() - center.getX()) + (topic.cords.getY() - center.getY()) * (topic.cords.getY() - center.getY()));
-                //TODO REMOVE
-                //calculatedDistance = rand.nextInt(10000)/100.0 ;
                 unorderedArray[i]=new Distance(calculatedDistance, topic);
                 i++;
             } else if(!question) {
@@ -329,34 +298,8 @@ public class Solution {
     public List<Distance> calculateTopicDistances3(Point2D.Double center, Integer kthSmallest,Boolean question) {
         List<Distance> returnList = new ArrayList<Distance>();
         Distance[] unorderedArray = new Distance[this.topicsFromInput.size()];
-        //Distance[] a;
-        List<Distance> toRemoveFromList = new ArrayList<Distance>();
-        Double calculatedDistance;
-        Enumeration<Integer> enumKey = this.topicsFromInput.keys();
         Distance kthSmallestDistance;
-        Integer i=0;
-        Hashtable<Integer,Integer> questionsForFar =  new Hashtable<Integer,Integer>();
-        //TODO REMOVE
-        Random rand = new Random();
-/*
-        while(enumKey.hasMoreElements()) {
-            Integer key = enumKey.nextElement();
-            Topic topic = this.topicsFromInput.get(key);
-            if(topic.questionsForThisTopic.size() >0 & question) {
-                //calculatedDistance = Math.sqrt((topic.cords.getX() - center.getX()) * (topic.cords.getX() - center.getX()) + (topic.cords.getY() - center.getY()) * (topic.cords.getY() - center.getY()));
-                //TODO REMOVE
-                calculatedDistance = rand.nextInt(10000)/100.0 ;
-                unorderedArray[i]=new Distance(calculatedDistance, topic);
-                i++;
-            } else if(!question) {
-                calculatedDistance = Math.sqrt((topic.cords.getX() - center.getX()) * (topic.cords.getX() - center.getX()) + (topic.cords.getY() - center.getY()) * (topic.cords.getY() - center.getY()));
-                unorderedArray[i]=new Distance(calculatedDistance, topic);
-                i++;
-            }
-        }
-        */
         unorderedArray = getUnorderedArrayOfTopics(center,question);
-        //a = Arrays.copyOf(unorderedArray,i);
         kthSmallestDistance =selectKth(unorderedArray,kthSmallest+500);
 
         for(int w=0; w<unorderedArray.length; w ++) {
@@ -364,12 +307,6 @@ public class Solution {
                 returnList.add(unorderedArray[w]);
             }
         }
-
-        //for(Question q: topic.questionsForThisTopic) {
-            //if(!questionsForFar.containsKey(q.id)) {
-                //questionsForFar.put(q.id,1);
-            //}
-        //}
         Collections.sort(returnList);
         return returnList;
     }
@@ -481,8 +418,8 @@ public class Solution {
         }
         public int compareTo(Distance other)
         {
-            if (Math.abs(distance-other.distance)<0.001)
-                return 0;
+            if (Math.abs(distance-other.distance)<=0.001)
+                return other.topicBeingHeld.id.compareTo(topicBeingHeld.id);
             return distance.compareTo(other.distance);
         }
 
