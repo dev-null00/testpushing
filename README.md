@@ -1,2 +1,2 @@
-nearyByChallenge
+nearybyChallenge
 ================
