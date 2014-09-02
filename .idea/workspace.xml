@@ -7,10 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="41e2ea1a-1a4a-4c65-aa4b-a240fa822bca" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NearbyChallenge.iml" afterPath="$PROJECT_DIR$/NearbyChallenge.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Solution.java" afterPath="$PROJECT_DIR$/src/Solution.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Test/Test.iml" afterPath="$PROJECT_DIR$/Test/Test.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output.txt" afterPath="$PROJECT_DIR$/output.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output2.txt" afterPath="$PROJECT_DIR$/output2.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/specfic.txt" afterPath="$PROJECT_DIR$/specfic.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="NearbyChallenge.iws" />
@@ -49,11 +49,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Solution.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Solution.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Solution.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.077071294" vertical-offset="5645" max-vertical-offset="8235">
-              <caret line="387" column="22" selection-start-line="387" selection-start-column="22" selection-end-line="387" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="5960" max-vertical-offset="8235">
+              <caret line="425" column="0" selection-start-line="425" selection-start-column="0" selection-end-line="425" selection-end-column="0" />
               <folding>
                 <element signature="e#355#362#0" expanded="true" />
                 <element signature="e#431#451#0" expanded="true" />
@@ -62,19 +62,19 @@
                 <element signature="e#13986#14003#0" expanded="true" />
                 <element signature="e#15295#15314#0" expanded="true" />
                 <element signature="e#17614#17624#0" expanded="true" />
-                <element signature="e#19596#19604#0" expanded="true" />
-                <element signature="e#20519#20520#0" expanded="true" />
-                <element signature="e#20572#20573#0" expanded="true" />
+                <element signature="e#19592#19600#0" expanded="true" />
+                <element signature="e#20515#20516#0" expanded="true" />
+                <element signature="e#20568#20569#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SolutionTest.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="SolutionTest.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Test/src/SolutionTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="8057" max-vertical-offset="13275">
-              <caret line="562" column="0" selection-start-line="562" selection-start-column="0" selection-end-line="562" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.41729322" vertical-offset="12123" max-vertical-offset="13275">
+              <caret line="834" column="28" selection-start-line="834" selection-start-column="28" selection-end-line="834" selection-end-column="28" />
               <folding>
                 <element signature="e#1027#1035#0" expanded="true" />
                 <element signature="e#1417#1425#0" expanded="true" />
@@ -297,7 +297,7 @@
       <recent name="$PROJECT_DIR$/test" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.SolutionTest">
+  <component name="RunManager" selected="JUnit.SolutionTest.testStressEndToEnd2">
     <configuration default="false" name="SolutionTest.testCloseTopic6" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="Test" />
@@ -406,6 +406,29 @@
       <ConfigurationWrapper RunnerId="Debug" />
       <ConfigurationWrapper RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run with VisualVM" />
+      <method />
+    </configuration>
+    <configuration default="false" name="SolutionTest.testStressEndToEnd2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="Test" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="SolutionTest" />
+      <option name="METHOD_NAME" value="testStressEndToEnd2" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
@@ -614,19 +637,21 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <list size="5">
+    <list size="6">
       <item index="0" class="java.lang.String" itemvalue="JUnit.SolutionTest.testCloseQuestion1" />
       <item index="1" class="java.lang.String" itemvalue="JUnit.SolutionTest.testCloseTopic6" />
       <item index="2" class="java.lang.String" itemvalue="JUnit.SolutionTest" />
       <item index="3" class="java.lang.String" itemvalue="JUnit.SolutionTest.testStressEndToEnd1" />
       <item index="4" class="java.lang.String" itemvalue="JUnit.SolutionTest.testStressEndToEnd4" />
+      <item index="5" class="java.lang.String" itemvalue="JUnit.SolutionTest.testStressEndToEnd2" />
     </list>
     <recent_temporary>
-      <list size="4">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.SolutionTest" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.SolutionTest.testCloseTopic6" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.SolutionTest.testStressEndToEnd4" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.SolutionTest.testStressEndToEnd1" />
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="JUnit.SolutionTest.testStressEndToEnd2" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.SolutionTest" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.SolutionTest.testCloseTopic6" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.SolutionTest.testStressEndToEnd4" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.SolutionTest.testStressEndToEnd1" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
@@ -668,7 +693,11 @@
       <created>1409643812742</created>
       <updated>1409643812742</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="faster">
+      <created>1409681548352</created>
+      <updated>1409681548352</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -814,9 +843,9 @@
             <element signature="e#13986#14003#0" expanded="true" />
             <element signature="e#15295#15314#0" expanded="true" />
             <element signature="e#17614#17624#0" expanded="true" />
-            <element signature="e#19596#19604#0" expanded="true" />
-            <element signature="e#20519#20520#0" expanded="true" />
-            <element signature="e#20572#20573#0" expanded="true" />
+            <element signature="e#19592#19600#0" expanded="true" />
+            <element signature="e#20515#20516#0" expanded="true" />
+            <element signature="e#20568#20569#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -914,9 +943,9 @@
             <element signature="e#13986#14003#0" expanded="true" />
             <element signature="e#15295#15314#0" expanded="true" />
             <element signature="e#17614#17624#0" expanded="true" />
-            <element signature="e#19596#19604#0" expanded="true" />
-            <element signature="e#20519#20520#0" expanded="true" />
-            <element signature="e#20572#20573#0" expanded="true" />
+            <element signature="e#19592#19600#0" expanded="true" />
+            <element signature="e#20515#20516#0" expanded="true" />
+            <element signature="e#20568#20569#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1014,9 +1043,9 @@
             <element signature="e#13986#14003#0" expanded="true" />
             <element signature="e#15295#15314#0" expanded="true" />
             <element signature="e#17614#17624#0" expanded="true" />
-            <element signature="e#19596#19604#0" expanded="true" />
-            <element signature="e#20519#20520#0" expanded="true" />
-            <element signature="e#20572#20573#0" expanded="true" />
+            <element signature="e#19592#19600#0" expanded="true" />
+            <element signature="e#20515#20516#0" expanded="true" />
+            <element signature="e#20568#20569#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1114,9 +1143,9 @@
             <element signature="e#13986#14003#0" expanded="true" />
             <element signature="e#15295#15314#0" expanded="true" />
             <element signature="e#17614#17624#0" expanded="true" />
-            <element signature="e#19596#19604#0" expanded="true" />
-            <element signature="e#20519#20520#0" expanded="true" />
-            <element signature="e#20572#20573#0" expanded="true" />
+            <element signature="e#19592#19600#0" expanded="true" />
+            <element signature="e#20515#20516#0" expanded="true" />
+            <element signature="e#20568#20569#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1214,9 +1243,9 @@
             <element signature="e#13986#14003#0" expanded="true" />
             <element signature="e#15295#15314#0" expanded="true" />
             <element signature="e#17614#17624#0" expanded="true" />
-            <element signature="e#19596#19604#0" expanded="true" />
-            <element signature="e#20519#20520#0" expanded="true" />
-            <element signature="e#20572#20573#0" expanded="true" />
+            <element signature="e#19592#19600#0" expanded="true" />
+            <element signature="e#20515#20516#0" expanded="true" />
+            <element signature="e#20568#20569#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1314,9 +1343,9 @@
             <element signature="e#13986#14003#0" expanded="true" />
             <element signature="e#15295#15314#0" expanded="true" />
             <element signature="e#17614#17624#0" expanded="true" />
-            <element signature="e#19596#19604#0" expanded="true" />
-            <element signature="e#20519#20520#0" expanded="true" />
-            <element signature="e#20572#20573#0" expanded="true" />
+            <element signature="e#19592#19600#0" expanded="true" />
+            <element signature="e#20515#20516#0" expanded="true" />
+            <element signature="e#20568#20569#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1414,9 +1443,9 @@
             <element signature="e#13986#14003#0" expanded="true" />
             <element signature="e#15295#15314#0" expanded="true" />
             <element signature="e#17614#17624#0" expanded="true" />
-            <element signature="e#19596#19604#0" expanded="true" />
-            <element signature="e#20519#20520#0" expanded="true" />
-            <element signature="e#20572#20573#0" expanded="true" />
+            <element signature="e#19592#19600#0" expanded="true" />
+            <element signature="e#20515#20516#0" expanded="true" />
+            <element signature="e#20568#20569#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1514,9 +1543,9 @@
             <element signature="e#13986#14003#0" expanded="true" />
             <element signature="e#15295#15314#0" expanded="true" />
             <element signature="e#17614#17624#0" expanded="true" />
-            <element signature="e#19596#19604#0" expanded="true" />
-            <element signature="e#20519#20520#0" expanded="true" />
-            <element signature="e#20572#20573#0" expanded="true" />
+            <element signature="e#19592#19600#0" expanded="true" />
+            <element signature="e#20515#20516#0" expanded="true" />
+            <element signature="e#20568#20569#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1614,9 +1643,9 @@
             <element signature="e#13986#14003#0" expanded="true" />
             <element signature="e#15295#15314#0" expanded="true" />
             <element signature="e#17614#17624#0" expanded="true" />
-            <element signature="e#19596#19604#0" expanded="true" />
-            <element signature="e#20519#20520#0" expanded="true" />
-            <element signature="e#20572#20573#0" expanded="true" />
+            <element signature="e#19592#19600#0" expanded="true" />
+            <element signature="e#20515#20516#0" expanded="true" />
+            <element signature="e#20568#20569#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1795,9 +1824,9 @@
             <element signature="e#13986#14003#0" expanded="true" />
             <element signature="e#15295#15314#0" expanded="true" />
             <element signature="e#17614#17624#0" expanded="true" />
-            <element signature="e#19596#19604#0" expanded="true" />
-            <element signature="e#20519#20520#0" expanded="true" />
-            <element signature="e#20572#20573#0" expanded="true" />
+            <element signature="e#19592#19600#0" expanded="true" />
+            <element signature="e#20515#20516#0" expanded="true" />
+            <element signature="e#20568#20569#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1895,9 +1924,9 @@
             <element signature="e#13986#14003#0" expanded="true" />
             <element signature="e#15295#15314#0" expanded="true" />
             <element signature="e#17614#17624#0" expanded="true" />
-            <element signature="e#19596#19604#0" expanded="true" />
-            <element signature="e#20519#20520#0" expanded="true" />
-            <element signature="e#20572#20573#0" expanded="true" />
+            <element signature="e#19592#19600#0" expanded="true" />
+            <element signature="e#20515#20516#0" expanded="true" />
+            <element signature="e#20568#20569#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1995,9 +2024,9 @@
             <element signature="e#13986#14003#0" expanded="true" />
             <element signature="e#15295#15314#0" expanded="true" />
             <element signature="e#17614#17624#0" expanded="true" />
-            <element signature="e#19596#19604#0" expanded="true" />
-            <element signature="e#20519#20520#0" expanded="true" />
-            <element signature="e#20572#20573#0" expanded="true" />
+            <element signature="e#19592#19600#0" expanded="true" />
+            <element signature="e#20515#20516#0" expanded="true" />
+            <element signature="e#20568#20569#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2023,10 +2052,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Solution.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="5960" max-vertical-offset="8235">
+          <caret line="425" column="0" selection-start-line="425" selection-start-column="0" selection-end-line="425" selection-end-column="0" />
+          <folding>
+            <element signature="e#355#362#0" expanded="true" />
+            <element signature="e#431#451#0" expanded="true" />
+            <element signature="e#13060#13069#0" expanded="true" />
+            <element signature="e#13901#13910#0" expanded="true" />
+            <element signature="e#13986#14003#0" expanded="true" />
+            <element signature="e#15295#15314#0" expanded="true" />
+            <element signature="e#17614#17624#0" expanded="true" />
+            <element signature="e#19592#19600#0" expanded="true" />
+            <element signature="e#20515#20516#0" expanded="true" />
+            <element signature="e#20568#20569#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Test/src/SolutionTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="8057" max-vertical-offset="13275">
-          <caret line="562" column="0" selection-start-line="562" selection-start-column="0" selection-end-line="562" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.41729322" vertical-offset="12123" max-vertical-offset="13275">
+          <caret line="834" column="28" selection-start-line="834" selection-start-column="28" selection-end-line="834" selection-end-column="28" />
           <folding>
             <element signature="e#1027#1035#0" expanded="true" />
             <element signature="e#1417#1425#0" expanded="true" />
@@ -2100,25 +2148,6 @@
             <element signature="e#30459#30467#0" expanded="true" />
             <element signature="e#31010#31018#0" expanded="true" />
             <element signature="e#32061#32069#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Solution.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.077071294" vertical-offset="5645" max-vertical-offset="8235">
-          <caret line="387" column="22" selection-start-line="387" selection-start-column="22" selection-end-line="387" selection-end-column="22" />
-          <folding>
-            <element signature="e#355#362#0" expanded="true" />
-            <element signature="e#431#451#0" expanded="true" />
-            <element signature="e#13060#13069#0" expanded="true" />
-            <element signature="e#13901#13910#0" expanded="true" />
-            <element signature="e#13986#14003#0" expanded="true" />
-            <element signature="e#15295#15314#0" expanded="true" />
-            <element signature="e#17614#17624#0" expanded="true" />
-            <element signature="e#19596#19604#0" expanded="true" />
-            <element signature="e#20519#20520#0" expanded="true" />
-            <element signature="e#20572#20573#0" expanded="true" />
           </folding>
         </state>
       </provider>

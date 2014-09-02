@@ -412,7 +412,7 @@ public class Solution {
         Distance[] unorderedArray = new Distance[this.topicsFromInput.size()];
         Distance kthSmallestDistance;
         unorderedArray = getUnorderedArrayOfTopics(center,question);
-        kthSmallestDistance =selectKth(unorderedArray,kthSmallest+500);
+        kthSmallestDistance =selectKth(unorderedArray,kthSmallest);
 
         for(int w=0; w<unorderedArray.length; w ++) {
             if(unorderedArray[w].distance<=kthSmallestDistance.distance) {
