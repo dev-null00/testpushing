@@ -142,7 +142,7 @@ public class Solution {
             }
 
             if (numberOfTopics > 0) {
-                for (int i = 1 + numberOfTopics; i < splitQuestionLine.length; i++) {
+                for (int i = 2; i < splitQuestionLine.length; i++) {
                     try {
                         //topicsForThisQuestion.add(Integer.parseInt(splitQuestionLine[i]));
                         topicForThisQuestion= Integer.parseInt(splitQuestionLine[i]);
@@ -218,9 +218,9 @@ public class Solution {
         List<Integer> returnListOfTopics = new ArrayList<Integer>();
         Distance currentDistance;
         Integer internalMaxNumberToReturn;
-        PriorityQueue topicsOrderByDistance;
+        List<Distance> topicsOrderByDistance;
 
-        topicsOrderByDistance = calculateTopicDistances(center);
+        topicsOrderByDistance = calculateTopicDistances2(center, numberToReturn);
 
         if(topicsOrderByDistance.size()<numberToReturn) {
             internalMaxNumberToReturn=topicsOrderByDistance.size();
@@ -230,7 +230,7 @@ public class Solution {
         }
         for(int i=0; i<internalMaxNumberToReturn; i++)
         {
-            currentDistance = (Distance)topicsOrderByDistance.poll();
+            currentDistance = topicsOrderByDistance.get(i);
             returnListOfTopics.add(currentDistance.topicBeingHeld.id);
         }
         return returnListOfTopics;
@@ -238,27 +238,31 @@ public class Solution {
 
     public List<Integer> getClosestQuestions(Integer numberToReturn, Point2D.Double center) {
         List<Integer> returnListOfQuestions = new ArrayList<Integer>();
+        Hashtable<Integer,Integer> returnHashOfQuestions = new Hashtable<Integer,Integer>();
         Distance currentDistance;
         Question currentQuestion;
         Integer internalMaxNumberToReturn;
-        PriorityQueue topicsOrderByDistance;
+        List<Distance> topicsOrderByDistance;
 
-        topicsOrderByDistance = calculateTopicDistances(center);
+        topicsOrderByDistance = calculateTopicDistances3(center, numberToReturn);
 
-        Integer i=0;
+        //Integer i=0;
         Integer w=0;
-        while(i<numberToReturn & !topicsOrderByDistance.isEmpty()) {
-            currentDistance = (Distance)topicsOrderByDistance.poll();
+        Integer returnedSoFar=0;
+        for (Integer i=0; i<topicsOrderByDistance.size();i++) {
+            currentDistance = topicsOrderByDistance.get(i);
             w=0;
-            while(w < currentDistance.topicBeingHeld.questionsForThisTopic.size()&i<numberToReturn) {
-                Collections.sort(currentDistance.topicBeingHeld.questionsForThisTopic);
+            Collections.sort(currentDistance.topicBeingHeld.questionsForThisTopic);
+            while(w < currentDistance.topicBeingHeld.questionsForThisTopic.size()&returnedSoFar<numberToReturn) {
                 currentQuestion = currentDistance.topicBeingHeld.questionsForThisTopic.get(w);
-                returnListOfQuestions.add(currentQuestion.id);
+                if(!returnHashOfQuestions.containsKey(currentQuestion.id)) {
+                    returnListOfQuestions.add(currentQuestion.id);
+                    returnHashOfQuestions.put(currentQuestion.id,1);
+                    returnedSoFar++;
+                }
                 w++;
-                i++;
             }
         }
-
         return returnListOfQuestions;
     }
 
@@ -275,12 +279,78 @@ public class Solution {
         }
         PriorityQueue topicsOrderByDistance = new PriorityQueue(unorderedList.size());
         topicsOrderByDistance.addAll(unorderedList);
+        //selectKth(unorderedList.toArray(new Distance[unorderedList.size()]),5);
         return topicsOrderByDistance;
     }
 
+    public List<Distance> calculateTopicDistances2(Point2D.Double center, Integer kthSmallest) {
+        List<Distance> unorderedList = new ArrayList<Distance>();
+        List<Distance> toRemoveFromList = new ArrayList<Distance>();
+        Double calculatedDistance;
+        Enumeration<Integer> enumKey = this.topicsFromInput.keys();
+        Distance kthSmallestDistance;
+        while(enumKey.hasMoreElements()) {
+            Integer key = enumKey.nextElement();
+            Topic topic = this.topicsFromInput.get(key);
+            calculatedDistance = Math.sqrt((topic.cords.getX()-center.getX())*(topic.cords.getX()-center.getX())+(topic.cords.getY()-center.getY())*(topic.cords.getY()-center.getY()));
+            //System.out.println(calculatedDistance);
+            unorderedList.add(new Distance(calculatedDistance, topic));
+        }
+        //PriorityQueue topicsOrderByDistance = new PriorityQueue(unorderedList.size());
+        //topicsOrderByDistance.addAll(unorderedList);
+        kthSmallestDistance =selectKth(unorderedList.toArray(new Distance[unorderedList.size()]),kthSmallest-1);
+        for (Distance d:unorderedList ) {
+            if(d.distance>kthSmallestDistance.distance) {
+                toRemoveFromList.add(d);
+            }
+        }
+
+        for (Distance d:toRemoveFromList ) {
+                unorderedList.remove(d);
+        }
+
+        Collections.sort(unorderedList);
+        return unorderedList;
+    }
+
+    public List<Distance> calculateTopicDistances3(Point2D.Double center, Integer kthSmallest) {
+        List<Distance> unorderedList = new ArrayList<Distance>();
+        List<Distance> toRemoveFromList = new ArrayList<Distance>();
+        Double calculatedDistance;
+        Enumeration<Integer> enumKey = this.topicsFromInput.keys();
+        Distance kthSmallestDistance;
+        while(enumKey.hasMoreElements()) {
+            Integer key = enumKey.nextElement();
+            Topic topic = this.topicsFromInput.get(key);
+            if(topic.questionsForThisTopic.size() >0) {
+                calculatedDistance = Math.sqrt((topic.cords.getX() - center.getX()) * (topic.cords.getX() - center.getX()) + (topic.cords.getY() - center.getY()) * (topic.cords.getY() - center.getY()));
+                //System.out.println(calculatedDistance);
+                unorderedList.add(new Distance(calculatedDistance, topic));
+            }
+        }
+        //PriorityQueue topicsOrderByDistance = new PriorityQueue(unorderedList.size());
+        //topicsOrderByDistance.addAll(unorderedList);
+        kthSmallestDistance =selectKth(unorderedList.toArray(new Distance[unorderedList.size()]),kthSmallest-1);
+        for (Distance d:unorderedList ) {
+            if(d.distance>kthSmallestDistance.distance) {
+                toRemoveFromList.add(d);
+            }
+        }
+
+        for (Distance d:toRemoveFromList ) {
+            unorderedList.remove(d);
+        }
+
+        Collections.sort(unorderedList);
+        return unorderedList;
+    }
+
+
     public static Distance selectKth(Distance[] arr, int k) {
-        if (arr == null || arr.length <= k)
+        if (arr == null )
             throw new Error();
+        if( arr.length <= k)
+            k=arr.length-1;
         Integer from = 0, to = arr.length - 1;
         // if from == to we reached the kth element
         while (from < to) {

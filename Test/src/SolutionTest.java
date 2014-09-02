@@ -500,6 +500,39 @@ public class SolutionTest {
     }
 
     @org.junit.Test
+    public void testCloseTopic6() throws Exception {
+        List<Integer> expectedValue = new ArrayList<Integer>();
+        List<Integer>  returnedValue;
+        expectedValue.add(8);
+        expectedValue.add(2);
+        Solution testInput = new Solution();
+        List<String> input = new ArrayList<String>();
+        input.add("10 6 2");
+        input.add("0 0.0 0.0");
+        input.add("1 1.0 1.0");
+        input.add("2 2.0 2.0");
+        input.add("3 10. 10.");
+        input.add("4 60. 60.");
+        input.add("5 3. 4.");
+        input.add("6 7. 8.");
+        input.add("7 100. 20.");
+        input.add("8 2. 2.");
+        input.add("9 4. 6.");
+        input.add("0 1 0");
+        input.add("1 2 0 1");
+        input.add("2 3 0 1 2");
+        input.add("3 0");
+        input.add("4 0");
+        input.add("5 2 1 2");
+        input.add("q 1 1. 1.");
+        input.add("t 2 2. 2.");
+        testInput.validateInput(input);
+        returnedValue=testInput.getClosestTopics(2, new Point2D.Double(2.,2.) );
+        assertEquals(expectedValue,returnedValue);
+    }
+
+
+    @org.junit.Test
     public void testCloseQuestion1() throws Exception {
         List<Integer> expectedValue = new ArrayList<Integer>();
         List<Integer>  returnedValue;
@@ -559,8 +592,8 @@ public class SolutionTest {
         List<Integer>  returnedValue;
         expectedValue.add(5);
         expectedValue.add(2);
-        expectedValue.add(1);
         expectedValue.add(3);
+        expectedValue.add(1);
         expectedValue.add(0);
         Solution testInput = new Solution();
         List<String> input = new ArrayList<String>();
@@ -588,8 +621,8 @@ public class SolutionTest {
         List<Integer>  returnedValue;
         expectedValue.add(5);
         expectedValue.add(2);
-        expectedValue.add(1);
         expectedValue.add(3);
+        expectedValue.add(1);
         expectedValue.add(0);
         Solution testInput = new Solution();
         List<String> input = new ArrayList<String>();
@@ -610,6 +643,67 @@ public class SolutionTest {
         returnedValue=testInput.getClosestQuestions(5, new Point2D.Double(100.0,100.0) );
         assertEquals(expectedValue,returnedValue);
     }
+
+    @org.junit.Test
+    public void testCloseQuestion5() throws Exception {
+        List<Integer> expectedValue = new ArrayList<Integer>();
+        List<Integer>  returnedValue;
+        expectedValue.add(5);
+        expectedValue.add(2);
+        expectedValue.add(3);
+        expectedValue.add(1);
+        expectedValue.add(0);
+        Solution testInput = new Solution();
+        List<String> input = new ArrayList<String>();
+        input.add("5 6 1");
+        input.add("0 0.25 0.5");
+        input.add("1 1.0 1.0");
+        input.add("2 2.0 2.0");
+        input.add("3 3.0 3.0");
+        input.add("4 4.0 4.0");
+        input.add("0 1 0");
+        input.add("1 2 0 1");
+        input.add("2 3 0 1 2");
+        input.add("3 1 0");
+        input.add("4 0");
+        input.add("5 2 1 2");
+        input.add("q 2 100.0 100.0");
+        testInput.validateInput(input);
+        returnedValue=testInput.getClosestQuestions(5, new Point2D.Double(100.0,100.0) );
+        assertEquals(expectedValue,returnedValue);
+    }
+
+    @org.junit.Test
+    public void testCloseQuestion6() throws Exception {
+        List<Integer> expectedValue = new ArrayList<Integer>();
+        List<Integer>  returnedValue;
+        expectedValue.add(5);
+        Solution testInput = new Solution();
+        List<String> input = new ArrayList<String>();
+        input.add("10 6 2");
+        input.add("0 0.0 0.0");
+        input.add("1 1.0 1.0");
+        input.add("2 2.0 2.0");
+        input.add("3 10. 10.");
+        input.add("4 60. 60.");
+        input.add("5 3. 4.");
+        input.add("6 7. 8.");
+        input.add("7 100. 20.");
+        input.add("8 2. 2.");
+        input.add("9 4. 6.");
+        input.add("0 1 0");
+        input.add("1 2 0 1");
+        input.add("2 3 0 1 2");
+        input.add("3 0");
+        input.add("4 0");
+        input.add("5 2 1 2");
+        input.add("q 1 1. 1.");
+        input.add("t 2 2. 2.");
+        testInput.validateInput(input);
+        returnedValue=testInput.getClosestQuestions(1, new Point2D.Double(1.,1.) );
+        assertEquals(expectedValue,returnedValue);
+    }
+
 
     @org.junit.Test
     public void testEndToEnd() throws Exception {
@@ -728,4 +822,35 @@ public class SolutionTest {
         testInput.runQueries();
     }
 
+    @org.junit.Test
+    public void testStressEndToEnd2() throws Exception {
+        Boolean expectedValue = true;
+        Boolean returnedValue;
+        Solution testInput = new Solution();
+        List<String> input = new ArrayList<String>();
+        BufferedReader br = new BufferedReader(new FileReader("3testInput.txt"));
+        String line;
+        while ((line = br.readLine()) != null) {
+            input.add(line);
+        }
+        br.close();
+        returnedValue = testInput.validateInput(input);
+        testInput.runQueries();
+    }
+
+    @org.junit.Test
+    public void testStressEndToEnd3() throws Exception {
+        Boolean expectedValue = true;
+        Boolean returnedValue;
+        Solution testInput = new Solution();
+        List<String> input = new ArrayList<String>();
+        BufferedReader br = new BufferedReader(new FileReader("4testInput.txt"));
+        String line;
+        while ((line = br.readLine()) != null) {
+            input.add(line);
+        }
+        br.close();
+        returnedValue = testInput.validateInput(input);
+        testInput.runQueries();
+    }
 }
