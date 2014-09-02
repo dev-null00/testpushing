@@ -592,8 +592,8 @@ public class SolutionTest {
         List<Integer>  returnedValue;
         expectedValue.add(5);
         expectedValue.add(2);
-        expectedValue.add(3);
         expectedValue.add(1);
+        expectedValue.add(3);
         expectedValue.add(0);
         Solution testInput = new Solution();
         List<String> input = new ArrayList<String>();
@@ -621,8 +621,8 @@ public class SolutionTest {
         List<Integer>  returnedValue;
         expectedValue.add(5);
         expectedValue.add(2);
-        expectedValue.add(3);
         expectedValue.add(1);
+        expectedValue.add(3);
         expectedValue.add(0);
         Solution testInput = new Solution();
         List<String> input = new ArrayList<String>();
@@ -650,8 +650,8 @@ public class SolutionTest {
         List<Integer>  returnedValue;
         expectedValue.add(5);
         expectedValue.add(2);
-        expectedValue.add(3);
         expectedValue.add(1);
+        expectedValue.add(3);
         expectedValue.add(0);
         Solution testInput = new Solution();
         List<String> input = new ArrayList<String>();
@@ -837,14 +837,21 @@ public class SolutionTest {
         returnedValue = testInput.validateInput(input);
         testInput.runQueries();
     }
-
+/*
     @org.junit.Test
     public void testStressEndToEnd3() throws Exception {
+        Process p;
+        try {
+            p = Runtime.getRuntime().exec("./generateTestFile.py > 6testInput.txt");
+            p.waitFor();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Boolean expectedValue = true;
         Boolean returnedValue;
         Solution testInput = new Solution();
         List<String> input = new ArrayList<String>();
-        BufferedReader br = new BufferedReader(new FileReader("4testInput.txt"));
+        BufferedReader br = new BufferedReader(new FileReader("6testInput.txt"));
         String line;
         while ((line = br.readLine()) != null) {
             input.add(line);
@@ -853,4 +860,5 @@ public class SolutionTest {
         returnedValue = testInput.validateInput(input);
         testInput.runQueries();
     }
+    */
 }

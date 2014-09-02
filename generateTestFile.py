@@ -1,11 +1,11 @@
 #!/usr/bin/python
 from random import randrange
-topics=randrange(10)+1
-questions=randrange(10)+1
-queries=randrange(5)+1
+topics=randrange(10000)+1
+questions=randrange(1000)+1
+queries=randrange(5000)+1
 print str(topics) + " " +str(questions) + " " +str(queries*2)
 for x in range(0, topics):
-	print str(x) + " " + str(randrange(1000000)) + " " + str(randrange(1000000))
+	print str(x) + " " + str(randrange(10000000000)/10000.0) + " " + str(randrange(10000000000)/10000.0)
 
 for x in range(0, questions):
 	numTopics=randrange(10)+1
@@ -16,5 +16,5 @@ for x in range(0, questions):
         print str(x) + " "+ str(numTopics) + topicForQuestion
 	
 for x in range(0, queries):
-        print "q "+ str(randrange(100)+1)+" "+  str(randrange(1000000)) + " " + str(randrange(1000000))
-        print "t "+ str(randrange(100)+1)+" "+  str(randrange(1000000)) + " " + str(randrange(1000000))
+        print "q "+ str(randrange(100)+1)+" "+  str(randrange(10000000000)/10000.0) + " " + str(randrange(10000000000)/10000.0)
+        print "t "+ str(randrange(100)+1)+" "+  str(randrange(10000000000)/10000.0) + " " + str(randrange(10000000000)/10000.0)
