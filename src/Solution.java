@@ -3,9 +3,8 @@ import com.sun.corba.se.impl.orbutil.closure.Constant;
 import java.awt.*;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Point2D;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.awt.print.Book;
+import java.io.*;
 import java.util.*;
 import java.util.List;
 
@@ -15,8 +14,9 @@ import java.util.List;
 public class Solution {
 
     private List<Query> queriesFromInput = new ArrayList<Query>();
-    Hashtable<Integer, Topic> topicsFromInput = new Hashtable<Integer, Topic>();
-    Topic[] topicsFromInputArray;
+    Hashtable<Integer, QuoraData> topicsFromInput = new Hashtable<Integer, QuoraData>();
+    QuoraData[] topicsFromInputArray;
+    QuoraData[] questionsFromInputArray;
     public static final  Integer MAXNUMBEROFQUESTION = 1000;
 
     public boolean validateInput(List<String> inputFromQuora){
@@ -70,8 +70,8 @@ public class Solution {
         Double y;
         Integer id;
         Integer i =0;
-        Topic tempTopic;
-        this.topicsFromInputArray = new Topic[inputTopics.size()];
+        QuoraData tempTopic;
+        this.topicsFromInputArray = new QuoraData[inputTopics.size()];
         for (String topic : inputTopics) {
             splitTopicLine = topic.split(" ");
             if(splitTopicLine.length != 3) {
@@ -101,7 +101,7 @@ public class Solution {
                 throw new IllegalArgumentException("topic id is out of bounds");
             }
             //this.topicsFromInput.add(new Topic(id,x,y));
-            tempTopic = new Topic(id, x, y);
+            tempTopic = new QuoraData(id, x, y);
             this.topicsFromInput.put(id, tempTopic);
             this.topicsFromInputArray[i] = tempTopic;
             i++;
@@ -116,6 +116,7 @@ public class Solution {
         Integer topicForThisQuestion ;
         Integer id;
         Integer numberOfTopics;
+        Integer sumOfNumberOfTopicsForQuestions = 0;
         for (String question : inputQuestions) {
             splitQuestionLine = question.split(" ");
             if(splitQuestionLine.length < 2| splitQuestionLine.length > 12) {
@@ -149,6 +150,8 @@ public class Solution {
             }
 
             if (numberOfTopics > 0) {
+                sumOfNumberOfTopicsForQuestions = sumOfNumberOfTopicsForQuestions+numberOfTopics;
+                /*
                 for (int i = 2; i < splitQuestionLine.length; i++) {
                     try {
                         //topicsForThisQuestion.add(Integer.parseInt(splitQuestionLine[i]));
@@ -157,7 +160,29 @@ public class Solution {
                         throw new NumberFormatException("invalid format for number of topic for question");
                     }
                     this.topicsFromInput.get(topicForThisQuestion).questionsForThisTopic.add(new Question(id));
+
                 }
+                */
+            }
+        }
+
+        questionsFromInputArray = new QuoraData[sumOfNumberOfTopicsForQuestions];
+
+        Integer questionsSoFar =0;
+        for (String question : inputQuestions) {
+            splitQuestionLine = question.split(" ");
+
+            for (int i = 2; i < splitQuestionLine.length; i++) {
+                try {
+                    //topicsForThisQuestion.add(Integer.parseInt(splitQuestionLine[i]));
+                    topicForThisQuestion = Integer.parseInt(splitQuestionLine[i]);
+                } catch (NumberFormatException ex) {
+                    throw new NumberFormatException("invalid format for number of topic for question");
+                }
+                id = Integer.parseInt(splitQuestionLine[0]);
+                //this.topicsFromInput.get(topicForThisQuestion).questionsForThisTopic.add(new Question(id));
+                questionsFromInputArray[questionsSoFar] = new QuoraData(id, this.topicsFromInput.get(topicForThisQuestion).cords.getX(), this.topicsFromInput.get(topicForThisQuestion).cords.getY());
+                questionsSoFar++;
             }
         }
         returnValue = true;
@@ -212,13 +237,75 @@ public class Solution {
 
     public void runQueries() {
         Integer i =0;
+        List<Integer> toPrint;
         for(Query query:queriesFromInput) {
             if(query.type.equalsIgnoreCase("t")) {
-                System.out.println(getClosestTopics(query.numberOfResultsToReturn, query.cords).toString().replace("[","").replace("]","").replace(",",""));
+                //System.out.println(getClosestTopics(query.numberOfResultsToReturn, query.cords).toString().replace("[","").replace("]","").replace(",",""));
+                toPrint = getClosestTopics(query.numberOfResultsToReturn, query.cords);
+                BufferedWriter out = null;
+                try {
+                    out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FileDescriptor.out), "ASCII"), 512);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                //long start = System.currentTimeMillis();
+                Boolean firstLine = true;
+                for (Integer num : toPrint) {
+                    try {
+                        //out.write("abcdefghijk ");
+                        if (firstLine) {
+                            out.write(String.valueOf(num));
+                            firstLine = false;
+                        } else {
+                            out.write(" "+String.valueOf(num));
+                        }
+
+                        //out.write('\n');
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                try {
+                    out.write('\n');
+                    out.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             else if (query.type.equalsIgnoreCase("q")) {
                 //System.out.println(i.toString() + ":"+getClosestQuestions(query.numberOfResultsToReturn,query.cords).toString().replace("[","").replace("]","").replace(",",""));
-                System.out.println(getClosestQuestions(query.numberOfResultsToReturn,query.cords).toString().replace("[","").replace("]","").replace(",",""));
+                //System.out.println(getClosestQuestions(query.numberOfResultsToReturn,query.cords).toString().replace("[","").replace("]","").replace(",",""));
+                toPrint = getClosestQuestions(query.numberOfResultsToReturn,query.cords);
+                BufferedWriter out = null;
+                try {
+                    out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FileDescriptor.out), "ASCII"), 512);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                //long start = System.currentTimeMillis();
+                Boolean firstLine = true;
+                for (Integer num : toPrint) {
+                    try {
+                        //out.write("abcdefghijk ");
+                        if (firstLine) {
+                            out.write(String.valueOf(num));
+                            firstLine = false;
+                        } else {
+                            out.write(" "+String.valueOf(num));
+                        }
+
+                        //out.write('\n');
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                try {
+                    out.write('\n');
+                    out.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //System.err.println("Loop time: " + (System.currentTimeMillis() - start));
             }
             //i++;
         }
@@ -241,7 +328,7 @@ public class Solution {
         for(int i=0; i<internalMaxNumberToReturn; i++)
         {
             currentDistance = topicsOrderByDistance.get(i);
-            returnListOfTopics.add(currentDistance.topicBeingHeld.id);
+            returnListOfTopics.add(currentDistance.dataBeingHeld.id);
         }
         return returnListOfTopics;
     }
@@ -250,45 +337,70 @@ public class Solution {
         List<Integer> returnListOfQuestions = new ArrayList<Integer>();
         Hashtable<Integer,Integer> returnHashOfQuestions = new Hashtable<Integer,Integer>();
         Distance currentDistance;
-        Question currentQuestion;
+        QuoraData currentQuestion;
         Integer internalMaxNumberToReturn;
-        List<Distance> topicsOrderByDistance;
+        List<Distance> questionsOrderByDistance;
 
-        topicsOrderByDistance = calculateTopicDistances3(center, numberToReturn, true);
+        questionsOrderByDistance = calculateTopicDistances3(center, numberToReturn, true);
 
-        Integer w=0;
-        Integer returnedSoFar=0;
-        for (Integer i=0; i<topicsOrderByDistance.size();i++) {
-            currentDistance = topicsOrderByDistance.get(i);
-            w=0;
-            Collections.sort(currentDistance.topicBeingHeld.questionsForThisTopic);
-            while(w < currentDistance.topicBeingHeld.questionsForThisTopic.size()&returnedSoFar<numberToReturn) {
-                currentQuestion = currentDistance.topicBeingHeld.questionsForThisTopic.get(w);
-                if(!returnHashOfQuestions.containsKey(currentQuestion.id)) {
-                    returnListOfQuestions.add(currentQuestion.id);
-                    returnHashOfQuestions.put(currentQuestion.id,1);
-                    returnedSoFar++;
-                }
-                w++;
+        if(questionsOrderByDistance.size()<numberToReturn) {
+            internalMaxNumberToReturn=questionsOrderByDistance.size();
+        }
+        else {
+            internalMaxNumberToReturn=numberToReturn;
+        }
+        for(int i=0; i<internalMaxNumberToReturn; i++)
+        {
+            currentDistance = questionsOrderByDistance.get(i);
+            if(!returnHashOfQuestions.containsKey(currentDistance.dataBeingHeld.id)) {
+                returnListOfQuestions.add(currentDistance.dataBeingHeld.id);
+                returnHashOfQuestions.put(currentDistance.dataBeingHeld.id,1);
             }
+            //returnListOfQuestions.add(currentDistance.dataBeingHeld.id);
         }
         return returnListOfQuestions;
     }
 
-    public Distance[] getUnorderedArrayOfTopics(Point2D.Double center, Boolean question) {
+    public Distance[] getUnorderedArrayOfTopics(Point2D.Double center, Boolean isAQuestion) {
         Double calculatedDistance;
-        Distance[] unorderedArray = new Distance[this.topicsFromInput.size()];
+        Distance[] unorderedArray;// = new Distance[this.topicsFromInput.size()];
+        Hashtable<Integer, Distance> hashTableOfMinDistancesForQuestion = new Hashtable<Integer, Distance>();
         Integer i=0;
+        Enumeration<Integer> enumKey;
 
-        for(int k=0; k< this.topicsFromInputArray.length; k++) {
-            Topic topic = this.topicsFromInputArray[k];
-            if(topic.questionsForThisTopic.size() >0 & question) {
-                calculatedDistance = Math.sqrt((topic.cords.getX() - center.getX()) * (topic.cords.getX() - center.getX()) + (topic.cords.getY() - center.getY()) * (topic.cords.getY() - center.getY()));
-                unorderedArray[i]=new Distance(calculatedDistance, topic);
+        QuoraData topic;
+        QuoraData question;
+
+        if(isAQuestion) {
+            unorderedArray = new Distance[this.questionsFromInputArray.length];
+            for(int k=0; k< this.questionsFromInputArray.length; k++) {
+                //only get min for questionl
+                question = this.questionsFromInputArray[k];
+                calculatedDistance = Math.sqrt((question.cords.getX() - center.getX()) * (question.cords.getX() - center.getX()) + (question.cords.getY() - center.getY()) * (question.cords.getY() - center.getY()));
+                if(hashTableOfMinDistancesForQuestion.containsKey(question.id)) {
+                    if(hashTableOfMinDistancesForQuestion.get(question.id).distance > calculatedDistance) {
+                        hashTableOfMinDistancesForQuestion.put(question.id, new Distance(calculatedDistance, question));
+                    }
+                } else {
+                    hashTableOfMinDistancesForQuestion.put(question.id, new Distance(calculatedDistance, question));
+                }
+                //unorderedArray[i] = new Distance(calculatedDistance, question);
+                //i++;
+
+            }
+            enumKey = hashTableOfMinDistancesForQuestion.keys();
+            while(enumKey.hasMoreElements()) {
+                Integer key = enumKey.nextElement();
+                Distance val = hashTableOfMinDistancesForQuestion.get(key);
+                unorderedArray[i]=val;
                 i++;
-            } else if(!question) {
+            }
+        } else {
+            unorderedArray = new Distance[this.topicsFromInput.size()];
+            for(int k=0; k< this.topicsFromInputArray.length; k++) {
+                topic = this.topicsFromInputArray[k];
                 calculatedDistance = Math.sqrt((topic.cords.getX() - center.getX()) * (topic.cords.getX() - center.getX()) + (topic.cords.getY() - center.getY()) * (topic.cords.getY() - center.getY()));
-                unorderedArray[i]=new Distance(calculatedDistance, topic);
+                unorderedArray[i] = new Distance(calculatedDistance, topic);
                 i++;
             }
         }
@@ -375,6 +487,18 @@ public class Solution {
         sol.runQueries();
     }
 
+    public class QuoraData implements Comparable<QuoraData>{
+        Integer id;
+        Point2D.Double cords;
+        public int compareTo(QuoraData other) {
+            return other.id.compareTo(id);
+        }
+        QuoraData(Integer id, Double x, Double y) {
+            this.id = id;
+            this.cords = new Point2D.Double(x,y);
+        }
+    }
+/*
     public class Topic {
         Point2D.Double cords;
         Integer id;
@@ -395,7 +519,7 @@ public class Solution {
             return other.id.compareTo(id);
         }
     }
-
+*/
     private class Query {
         String type;
         Point2D.Double cords;
@@ -410,16 +534,16 @@ public class Solution {
 
     public class Distance implements Comparable<Distance>{
         Double distance;
-        Topic topicBeingHeld;
+        QuoraData dataBeingHeld;
 
-        Distance(Double distance, Topic topicToHold) {
+        Distance(Double distance, QuoraData dataToHold) {
             this.distance =distance;
-            this.topicBeingHeld = topicToHold;
+            this.dataBeingHeld = dataToHold;
         }
         public int compareTo(Distance other)
         {
             if (Math.abs(distance-other.distance)<=0.001)
-                return other.topicBeingHeld.id.compareTo(topicBeingHeld.id);
+                return other.dataBeingHeld.id.compareTo(dataBeingHeld.id);
             return distance.compareTo(other.distance);
         }
 
