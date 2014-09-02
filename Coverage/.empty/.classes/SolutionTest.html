@@ -1,0 +1,814 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: SolutionTest</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">&lt;empty package name&gt;</a> ]
+</div>
+
+<h1>Coverage Summary for Class: SolutionTest (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SolutionTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (56/ 56)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    85.2%
+  </span>
+  <span class="absValue">
+    (485/ 569)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;import org.junit.Rule;
+<i>2</i>&nbsp;import org.junit.rules.ExpectedException;
+<i>3</i>&nbsp;
+<i>4</i>&nbsp;import java.awt.geom.Point2D;
+<i>5</i>&nbsp;import java.io.BufferedReader;
+<i>6</i>&nbsp;import java.io.FileReader;
+<i>7</i>&nbsp;import java.util.ArrayList;
+<i>8</i>&nbsp;import java.util.List;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;import static org.junit.Assert.*;
+<i>11</i>&nbsp;import static org.junit.Assert.assertEquals;
+<i>12</i>&nbsp;
+<b class="fc"><i>13</i>&nbsp;public class SolutionTest {</b>
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    @org.junit.Before
+<i>16</i>&nbsp;    public void setUp() throws Exception {
+<i>17</i>&nbsp;
+<b class="fc"><i>18</i>&nbsp;    }</b>
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    @org.junit.After
+<i>21</i>&nbsp;    public void tearDown() throws Exception {
+<i>22</i>&nbsp;
+<b class="fc"><i>23</i>&nbsp;    }</b>
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;  /*  @org.junit.Test
+<i>26</i>&nbsp;    public void testMain() throws Exception {
+<i>27</i>&nbsp;    }
+<i>28</i>&nbsp;    */
+<i>29</i>&nbsp;
+<b class="fc"><i>30</i>&nbsp;    @Rule</b>
+<i>31</i>&nbsp;    public ExpectedException expectedEx = ExpectedException.none();
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    @org.junit.Test
+<i>34</i>&nbsp;    public void testForNumberOfParamters() throws Exception {
+<b class="fc"><i>35</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>36</i>&nbsp;        expectedEx.expectMessage(&quot;first line must contain 3 integers: number of topics T, number of questions Q, and number of queries N.&quot;);</b>
+<b class="fc"><i>37</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>38</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>39</i>&nbsp;        input.add(&quot;hello &quot;);</b>
+<b class="fc"><i>40</i>&nbsp;        testInput.validateInput(input);</b>
+<b class="nc"><i>41</i>&nbsp;    }</b>
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    @org.junit.Test
+<i>44</i>&nbsp;    public void testForIntegersInFirstLine() throws Exception {
+<b class="fc"><i>45</i>&nbsp;        expectedEx.expect(NumberFormatException.class);</b>
+<b class="fc"><i>46</i>&nbsp;        expectedEx.expectMessage(&quot;first line must contain only integers&quot;);</b>
+<b class="fc"><i>47</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>48</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>49</i>&nbsp;        input.add(&quot;a b c&quot;);</b>
+<b class="fc"><i>50</i>&nbsp;        testInput.validateInput(input);</b>
+<b class="nc"><i>51</i>&nbsp;    }</b>
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    @org.junit.Test
+<i>54</i>&nbsp;    public void testTotalNumberOfLine() throws Exception {
+<b class="fc"><i>55</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>56</i>&nbsp;        expectedEx.expectMessage(&quot;the number of Topics, Questions, and Queries does not add up in this input&quot;);</b>
+<b class="fc"><i>57</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>58</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>59</i>&nbsp;        input.add(&quot;1 1 1&quot;);</b>
+<b class="fc"><i>60</i>&nbsp;        testInput.validateInput(input);</b>
+<b class="nc"><i>61</i>&nbsp;    }</b>
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    @org.junit.Test
+<i>64</i>&nbsp;    public void testBoundariesOfInput1() throws Exception {
+<b class="fc"><i>65</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>66</i>&nbsp;        expectedEx.expectMessage(&quot;the number of Topics, Questions, or Queries are out of bounds&quot;);</b>
+<b class="fc"><i>67</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>68</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>69</i>&nbsp;        input.add(&quot;0 1 1&quot;);</b>
+<b class="fc"><i>70</i>&nbsp;        testInput.validateInput(input);</b>
+<b class="nc"><i>71</i>&nbsp;    }</b>
+<i>72</i>&nbsp;
+<i>73</i>&nbsp;    @org.junit.Test
+<i>74</i>&nbsp;    public void testBoundariesOfInput2() throws Exception {
+<b class="fc"><i>75</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>76</i>&nbsp;        expectedEx.expectMessage(&quot;the number of Topics, Questions, or Queries are out of bounds&quot;);</b>
+<b class="fc"><i>77</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>78</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>79</i>&nbsp;        input.add(&quot;10001 1 1&quot;);</b>
+<b class="fc"><i>80</i>&nbsp;        testInput.validateInput(input);</b>
+<b class="nc"><i>81</i>&nbsp;    }</b>
+<i>82</i>&nbsp;
+<i>83</i>&nbsp;    @org.junit.Test
+<i>84</i>&nbsp;    public void testBoundariesOfInput3() throws Exception {
+<b class="fc"><i>85</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>86</i>&nbsp;        expectedEx.expectMessage(&quot;the number of Topics, Questions, or Queries are out of bounds&quot;);</b>
+<b class="fc"><i>87</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>88</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>89</i>&nbsp;        input.add(&quot;1 0 1&quot;);</b>
+<b class="fc"><i>90</i>&nbsp;        testInput.validateInput(input);</b>
+<b class="nc"><i>91</i>&nbsp;    }</b>
+<i>92</i>&nbsp;
+<i>93</i>&nbsp;    @org.junit.Test
+<i>94</i>&nbsp;    public void testBoundariesOfInput4() throws Exception {
+<b class="fc"><i>95</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>96</i>&nbsp;        expectedEx.expectMessage(&quot;the number of Topics, Questions, or Queries are out of bounds&quot;);</b>
+<b class="fc"><i>97</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>98</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>99</i>&nbsp;        input.add(&quot;1 1001 1&quot;);</b>
+<b class="fc"><i>100</i>&nbsp;        testInput.validateInput(input);</b>
+<b class="nc"><i>101</i>&nbsp;    }</b>
+<i>102</i>&nbsp;
+<i>103</i>&nbsp;    @org.junit.Test
+<i>104</i>&nbsp;    public void testBoundariesOfInput5() throws Exception {
+<b class="fc"><i>105</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>106</i>&nbsp;        expectedEx.expectMessage(&quot;the number of Topics, Questions, or Queries are out of bounds&quot;);</b>
+<b class="fc"><i>107</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>108</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>109</i>&nbsp;        input.add(&quot;1 1 0&quot;);</b>
+<b class="fc"><i>110</i>&nbsp;        testInput.validateInput(input);</b>
+<b class="nc"><i>111</i>&nbsp;    }</b>
+<i>112</i>&nbsp;
+<i>113</i>&nbsp;    @org.junit.Test
+<i>114</i>&nbsp;    public void testBoundariesOfInput6() throws Exception {
+<b class="fc"><i>115</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>116</i>&nbsp;        expectedEx.expectMessage(&quot;the number of Topics, Questions, or Queries are out of bounds&quot;);</b>
+<b class="fc"><i>117</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>118</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>119</i>&nbsp;        input.add(&quot;1 1 10001&quot;);</b>
+<b class="fc"><i>120</i>&nbsp;        testInput.validateInput(input);</b>
+<b class="nc"><i>121</i>&nbsp;    }</b>
+<i>122</i>&nbsp;
+<i>123</i>&nbsp;    @org.junit.Test
+<i>124</i>&nbsp;    public void testValidateTopicsFormat() throws Exception {
+<b class="fc"><i>125</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>126</i>&nbsp;        expectedEx.expectMessage(&quot;topic has invalid format for topics: id x y&quot;);</b>
+<b class="fc"><i>127</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>128</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>129</i>&nbsp;        input.add(&quot;1 10001&quot;);</b>
+<b class="fc"><i>130</i>&nbsp;        testInput.validateTopics(input);</b>
+<b class="nc"><i>131</i>&nbsp;    }</b>
+<i>132</i>&nbsp;
+<i>133</i>&nbsp;    @org.junit.Test
+<i>134</i>&nbsp;    public void testValidateTopicsFormat2() throws Exception {
+<b class="fc"><i>135</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>136</i>&nbsp;        expectedEx.expectMessage(&quot;topic has invalid format for topics: id x y&quot;);</b>
+<b class="fc"><i>137</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>138</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>139</i>&nbsp;        input.add(&quot;1&quot;);</b>
+<b class="fc"><i>140</i>&nbsp;        testInput.validateTopics(input);</b>
+<b class="nc"><i>141</i>&nbsp;    }</b>
+<i>142</i>&nbsp;
+<i>143</i>&nbsp;    @org.junit.Test
+<i>144</i>&nbsp;    public void testValidateTopicsFormat3() throws Exception {
+<b class="fc"><i>145</i>&nbsp;        expectedEx.expect(NumberFormatException.class);</b>
+<b class="fc"><i>146</i>&nbsp;        expectedEx.expectMessage(&quot;topic has invalid format for coordinates&quot;);</b>
+<b class="fc"><i>147</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>148</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>149</i>&nbsp;        input.add(&quot;0 1 s&quot;);</b>
+<b class="fc"><i>150</i>&nbsp;        testInput.validateTopics(input);</b>
+<b class="nc"><i>151</i>&nbsp;    }</b>
+<i>152</i>&nbsp;
+<i>153</i>&nbsp;    @org.junit.Test
+<i>154</i>&nbsp;    public void testValidateTopicsFormat4() throws Exception {
+<b class="fc"><i>155</i>&nbsp;        expectedEx.expect(NumberFormatException.class);</b>
+<b class="fc"><i>156</i>&nbsp;        expectedEx.expectMessage(&quot;topic has invalid format for coordinates&quot;);</b>
+<b class="fc"><i>157</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>158</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>159</i>&nbsp;        input.add(&quot;0 s 1&quot;);</b>
+<b class="fc"><i>160</i>&nbsp;        testInput.validateTopics(input);</b>
+<b class="nc"><i>161</i>&nbsp;    }</b>
+<i>162</i>&nbsp;
+<i>163</i>&nbsp;    @org.junit.Test
+<i>164</i>&nbsp;    public void testValidateTopicsFormat5() throws Exception {
+<b class="fc"><i>165</i>&nbsp;        expectedEx.expect(NumberFormatException.class);</b>
+<b class="fc"><i>166</i>&nbsp;        expectedEx.expectMessage(&quot;invalid format for topic id&quot;);</b>
+<b class="fc"><i>167</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>168</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>169</i>&nbsp;        input.add(&quot;a 1 1&quot;);</b>
+<b class="fc"><i>170</i>&nbsp;        testInput.validateTopics(input);</b>
+<b class="nc"><i>171</i>&nbsp;    }</b>
+<i>172</i>&nbsp;
+<i>173</i>&nbsp;    @org.junit.Test
+<i>174</i>&nbsp;    public void testTopicsBounds1() throws Exception {
+<b class="fc"><i>175</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>176</i>&nbsp;        expectedEx.expectMessage(&quot;coordinates are out of bounds&quot;);</b>
+<b class="fc"><i>177</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>178</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>179</i>&nbsp;        input.add(&quot;0 -1 1&quot;);</b>
+<b class="fc"><i>180</i>&nbsp;        testInput.validateTopics(input);</b>
+<b class="nc"><i>181</i>&nbsp;    }</b>
+<i>182</i>&nbsp;
+<i>183</i>&nbsp;    @org.junit.Test
+<i>184</i>&nbsp;    public void testTopicsBounds2() throws Exception {
+<b class="fc"><i>185</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>186</i>&nbsp;        expectedEx.expectMessage(&quot;coordinates are out of bounds&quot;);</b>
+<b class="fc"><i>187</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>188</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>189</i>&nbsp;        input.add(&quot;0 1 -1&quot;);</b>
+<b class="fc"><i>190</i>&nbsp;        testInput.validateTopics(input);</b>
+<b class="nc"><i>191</i>&nbsp;    }</b>
+<i>192</i>&nbsp;
+<i>193</i>&nbsp;    @org.junit.Test
+<i>194</i>&nbsp;    public void testTopicsBounds3() throws Exception {
+<b class="fc"><i>195</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>196</i>&nbsp;        expectedEx.expectMessage(&quot;coordinates are out of bounds&quot;);</b>
+<b class="fc"><i>197</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>198</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>199</i>&nbsp;        input.add(&quot;0 1000001 0&quot;);</b>
+<b class="fc"><i>200</i>&nbsp;        testInput.validateTopics(input);</b>
+<b class="nc"><i>201</i>&nbsp;    }</b>
+<i>202</i>&nbsp;
+<i>203</i>&nbsp;    @org.junit.Test
+<i>204</i>&nbsp;    public void testTopicsBounds4() throws Exception {
+<b class="fc"><i>205</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>206</i>&nbsp;        expectedEx.expectMessage(&quot;coordinates are out of bounds&quot;);</b>
+<b class="fc"><i>207</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>208</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>209</i>&nbsp;        input.add(&quot;0 0 1000001&quot;);</b>
+<b class="fc"><i>210</i>&nbsp;        testInput.validateTopics(input);</b>
+<b class="nc"><i>211</i>&nbsp;    }</b>
+<i>212</i>&nbsp;
+<i>213</i>&nbsp;    @org.junit.Test
+<i>214</i>&nbsp;    public void testTopicsIdBounds1() throws Exception {
+<b class="fc"><i>215</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>216</i>&nbsp;        expectedEx.expectMessage(&quot;topic id is out of bounds&quot;);</b>
+<b class="fc"><i>217</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>218</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>219</i>&nbsp;        input.add(&quot;-1 0 0&quot;);</b>
+<b class="fc"><i>220</i>&nbsp;        testInput.validateTopics(input);</b>
+<b class="nc"><i>221</i>&nbsp;    }</b>
+<i>222</i>&nbsp;
+<i>223</i>&nbsp;    @org.junit.Test
+<i>224</i>&nbsp;    public void testTopicsIdBounds2() throws Exception {
+<b class="fc"><i>225</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>226</i>&nbsp;        expectedEx.expectMessage(&quot;topic id is out of bounds&quot;);</b>
+<b class="fc"><i>227</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>228</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>229</i>&nbsp;        input.add(&quot;100001 0 0&quot;);</b>
+<b class="fc"><i>230</i>&nbsp;        testInput.validateTopics(input);</b>
+<b class="nc"><i>231</i>&nbsp;    }</b>
+<b class="nc"><i>232</i>&nbsp;</b>
+<i>233</i>&nbsp;    @org.junit.Test
+<i>234</i>&nbsp;    public void testSuccessfulTopicsFormat1() throws Exception {
+<b class="fc"><i>235</i>&nbsp;        Boolean expectedValue = true;</b>
+<b class="nc"><i>236</i>&nbsp;        Boolean returnedValue;</b>
+<b class="fc"><i>237</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>238</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>239</i>&nbsp;        input.add(&quot;0 1.9000000000000000000003 1&quot;);</b>
+<b class="fc"><i>240</i>&nbsp;        returnedValue = testInput.validateTopics(input);</b>
+<b class="fc"><i>241</i>&nbsp;        assertEquals(expectedValue,returnedValue);</b>
+<b class="fc"><i>242</i>&nbsp;    }</b>
+<b class="nc"><i>243</i>&nbsp;</b>
+<i>244</i>&nbsp;    @org.junit.Test
+<i>245</i>&nbsp;    public void testSuccessfulTopicsFormat2() throws Exception {
+<b class="fc"><i>246</i>&nbsp;        Boolean expectedValue = true;</b>
+<b class="nc"><i>247</i>&nbsp;        Boolean returnedValue;</b>
+<b class="fc"><i>248</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>249</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>250</i>&nbsp;        input.add(&quot;0 123.434543 1.9000000000000000000003&quot;);</b>
+<b class="fc"><i>251</i>&nbsp;        returnedValue = testInput.validateTopics(input);</b>
+<b class="fc"><i>252</i>&nbsp;        assertEquals(expectedValue,returnedValue);</b>
+<b class="fc"><i>253</i>&nbsp;    }</b>
+<i>254</i>&nbsp;
+<i>255</i>&nbsp;    @org.junit.Test
+<i>256</i>&nbsp;    public void testQuestionInputBound1() throws Exception {
+<b class="fc"><i>257</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>258</i>&nbsp;        expectedEx.expectMessage(&quot;question has invalid format: id numberOfTopics topic1 ... topicN. Note N up to 10&quot;);</b>
+<b class="fc"><i>259</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>260</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>261</i>&nbsp;        input.add(&quot;0&quot;);</b>
+<b class="fc"><i>262</i>&nbsp;        testInput.validateQuestions(input);</b>
+<b class="nc"><i>263</i>&nbsp;    }</b>
+<i>264</i>&nbsp;
+<i>265</i>&nbsp;    @org.junit.Test
+<i>266</i>&nbsp;    public void testQuestionInputBound2() throws Exception {
+<b class="fc"><i>267</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>268</i>&nbsp;        expectedEx.expectMessage(&quot;question has invalid format: id numberOfTopics topic1 ... topicN. Note N up to 10&quot;);</b>
+<b class="fc"><i>269</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>270</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>271</i>&nbsp;        input.add(&quot;0 10 1 2 3 4 5 6 7 8 9 10 11&quot;);</b>
+<b class="fc"><i>272</i>&nbsp;        testInput.validateQuestions(input);</b>
+<b class="nc"><i>273</i>&nbsp;    }</b>
+<i>274</i>&nbsp;
+<i>275</i>&nbsp;    @org.junit.Test
+<i>276</i>&nbsp;    public void testQuestionValidIdFormat() throws Exception {
+<b class="fc"><i>277</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>278</i>&nbsp;        expectedEx.expectMessage(&quot;invalid format for question id&quot;);</b>
+<b class="fc"><i>279</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>280</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>281</i>&nbsp;        input.add(&quot;s 10 1 2 3 4 5 6 7 8 9 10&quot;);</b>
+<b class="fc"><i>282</i>&nbsp;        testInput.validateQuestions(input);</b>
+<b class="nc"><i>283</i>&nbsp;    }</b>
+<i>284</i>&nbsp;
+<i>285</i>&nbsp;    @org.junit.Test
+<i>286</i>&nbsp;    public void testQuestionValidNumberOfQuestionsFormat() throws Exception {
+<b class="fc"><i>287</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>288</i>&nbsp;        expectedEx.expectMessage(&quot;invalid format for number of topic for question&quot;);</b>
+<b class="fc"><i>289</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>290</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>291</i>&nbsp;        input.add(&quot;0 a 1 2 3 4 5 6 7 8 9 10&quot;);</b>
+<b class="fc"><i>292</i>&nbsp;        testInput.validateQuestions(input);</b>
+<b class="nc"><i>293</i>&nbsp;    }</b>
+<i>294</i>&nbsp;
+<i>295</i>&nbsp;    @org.junit.Test
+<i>296</i>&nbsp;    public void testQuestionIdBounds1() throws Exception {
+<b class="fc"><i>297</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>298</i>&nbsp;        expectedEx.expectMessage(&quot;question id is out of bounds&quot;);</b>
+<b class="fc"><i>299</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>300</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>301</i>&nbsp;        input.add(&quot;-1 0 0&quot;);</b>
+<b class="fc"><i>302</i>&nbsp;        testInput.validateQuestions(input);</b>
+<b class="nc"><i>303</i>&nbsp;    }</b>
+<i>304</i>&nbsp;
+<i>305</i>&nbsp;    @org.junit.Test
+<i>306</i>&nbsp;    public void testQuestionIdBounds2() throws Exception {
+<b class="fc"><i>307</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>308</i>&nbsp;        expectedEx.expectMessage(&quot;question id is out of bounds&quot;);</b>
+<b class="fc"><i>309</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>310</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>311</i>&nbsp;        input.add(&quot;100001 0 0&quot;);</b>
+<b class="fc"><i>312</i>&nbsp;        testInput.validateQuestions(input);</b>
+<b class="nc"><i>313</i>&nbsp;    }</b>
+<i>314</i>&nbsp;
+<i>315</i>&nbsp;    @org.junit.Test
+<i>316</i>&nbsp;    public void testQuestionNumTopicsBounds1() throws Exception {
+<b class="fc"><i>317</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>318</i>&nbsp;        expectedEx.expectMessage(&quot;number of topics for question is out of bounds&quot;);</b>
+<b class="fc"><i>319</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>320</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>321</i>&nbsp;        input.add(&quot;0 -1 0&quot;);</b>
+<b class="fc"><i>322</i>&nbsp;        testInput.validateQuestions(input);</b>
+<b class="nc"><i>323</i>&nbsp;    }</b>
+<i>324</i>&nbsp;
+<i>325</i>&nbsp;    @org.junit.Test
+<i>326</i>&nbsp;    public void testQuestionNumTopicsBounds2() throws Exception {
+<b class="fc"><i>327</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>328</i>&nbsp;        expectedEx.expectMessage(&quot;number of topics for question is out of bounds&quot;);</b>
+<b class="fc"><i>329</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>330</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>331</i>&nbsp;        input.add(&quot;0 11 0&quot;);</b>
+<b class="fc"><i>332</i>&nbsp;        testInput.validateQuestions(input);</b>
+<b class="nc"><i>333</i>&nbsp;    }</b>
+<i>334</i>&nbsp;
+<i>335</i>&nbsp;    @org.junit.Test
+<i>336</i>&nbsp;    public void testQuestionLineExpectedCount() throws Exception {
+<b class="fc"><i>337</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>338</i>&nbsp;        expectedEx.expectMessage(&quot;question line does not match expected count&quot;);</b>
+<b class="fc"><i>339</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>340</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>341</i>&nbsp;        input.add(&quot;0 10 0&quot;);</b>
+<b class="fc"><i>342</i>&nbsp;        testInput.validateQuestions(input);</b>
+<b class="nc"><i>343</i>&nbsp;    }</b>
+<i>344</i>&nbsp;
+<i>345</i>&nbsp;    @org.junit.Test
+<i>346</i>&nbsp;    public void testTopicsForQuestionFormat() throws Exception {
+<b class="fc"><i>347</i>&nbsp;        expectedEx.expect(NumberFormatException.class);</b>
+<b class="fc"><i>348</i>&nbsp;        expectedEx.expectMessage(&quot;invalid format for number of topic for question&quot;);</b>
+<b class="fc"><i>349</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>350</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>351</i>&nbsp;        input.add(&quot;0 1 a&quot;);</b>
+<b class="fc"><i>352</i>&nbsp;        testInput.validateQuestions(input);</b>
+<b class="nc"><i>353</i>&nbsp;    }</b>
+<i>354</i>&nbsp;
+<i>355</i>&nbsp;    @org.junit.Test
+<i>356</i>&nbsp;    public void testQueriesForFormat1() throws Exception {
+<b class="fc"><i>357</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>358</i>&nbsp;        expectedEx.expectMessage(&quot;query has invalid format for topics: queryType numberOfResultsToReturn x y&quot;);</b>
+<b class="fc"><i>359</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>360</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>361</i>&nbsp;        input.add(&quot;0 1 a&quot;);</b>
+<b class="fc"><i>362</i>&nbsp;        testInput.validateQueries(input);</b>
+<b class="nc"><i>363</i>&nbsp;    }</b>
+<i>364</i>&nbsp;
+<i>365</i>&nbsp;    @org.junit.Test
+<i>366</i>&nbsp;    public void testQueriesForFormat2() throws Exception {
+<b class="fc"><i>367</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>368</i>&nbsp;        expectedEx.expectMessage(&quot;invalid query type&quot;);</b>
+<b class="fc"><i>369</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>370</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>371</i>&nbsp;        input.add(&quot;w 0 1 a&quot;);</b>
+<b class="fc"><i>372</i>&nbsp;        testInput.validateQueries(input);</b>
+<b class="nc"><i>373</i>&nbsp;    }</b>
+<i>374</i>&nbsp;
+<i>375</i>&nbsp;    @org.junit.Test
+<i>376</i>&nbsp;    public void testQueriesForFormat3() throws Exception {
+<b class="fc"><i>377</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>378</i>&nbsp;        expectedEx.expectMessage(&quot;invalid query type&quot;);</b>
+<b class="fc"><i>379</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>380</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>381</i>&nbsp;        input.add(&quot;0 0 1 a&quot;);</b>
+<b class="fc"><i>382</i>&nbsp;        testInput.validateQueries(input);</b>
+<b class="nc"><i>383</i>&nbsp;    }</b>
+<i>384</i>&nbsp;
+<i>385</i>&nbsp;    @org.junit.Test
+<i>386</i>&nbsp;    public void testQueriesForFormat4() throws Exception {
+<b class="fc"><i>387</i>&nbsp;        expectedEx.expect(NumberFormatException.class);</b>
+<b class="fc"><i>388</i>&nbsp;        expectedEx.expectMessage(&quot;invalid format for number of results to return&quot;);</b>
+<b class="fc"><i>389</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>390</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>391</i>&nbsp;        input.add(&quot;t a 1 a&quot;);</b>
+<b class="fc"><i>392</i>&nbsp;        testInput.validateQueries(input);</b>
+<b class="nc"><i>393</i>&nbsp;    }</b>
+<i>394</i>&nbsp;
+<i>395</i>&nbsp;    @org.junit.Test
+<i>396</i>&nbsp;    public void testQueriesForFormat5() throws Exception {
+<b class="fc"><i>397</i>&nbsp;        expectedEx.expect(NumberFormatException.class);</b>
+<b class="fc"><i>398</i>&nbsp;        expectedEx.expectMessage(&quot;query has invalid format for coordinates&quot;);</b>
+<b class="fc"><i>399</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>400</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>401</i>&nbsp;        input.add(&quot;t 0 1 s&quot;);</b>
+<b class="fc"><i>402</i>&nbsp;        testInput.validateQueries(input);</b>
+<b class="nc"><i>403</i>&nbsp;    }</b>
+<i>404</i>&nbsp;
+<i>405</i>&nbsp;    @org.junit.Test
+<i>406</i>&nbsp;    public void testQueriesForFormat6() throws Exception {
+<b class="fc"><i>407</i>&nbsp;        expectedEx.expect(NumberFormatException.class);</b>
+<b class="fc"><i>408</i>&nbsp;        expectedEx.expectMessage(&quot;query has invalid format for coordinates&quot;);</b>
+<b class="fc"><i>409</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>410</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>411</i>&nbsp;        input.add(&quot;t 0 s 1&quot;);</b>
+<b class="fc"><i>412</i>&nbsp;        testInput.validateQueries(input);</b>
+<b class="nc"><i>413</i>&nbsp;    }</b>
+<i>414</i>&nbsp;
+<i>415</i>&nbsp;    @org.junit.Test
+<i>416</i>&nbsp;    public void testQueryCoordinateBounds1() throws Exception {
+<b class="fc"><i>417</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>418</i>&nbsp;        expectedEx.expectMessage(&quot;coordinates are out of bounds&quot;);</b>
+<b class="fc"><i>419</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>420</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>421</i>&nbsp;        input.add(&quot;t 0 -1 1&quot;);</b>
+<b class="fc"><i>422</i>&nbsp;        testInput.validateQueries(input);</b>
+<b class="nc"><i>423</i>&nbsp;    }</b>
+<i>424</i>&nbsp;
+<i>425</i>&nbsp;    @org.junit.Test
+<i>426</i>&nbsp;    public void testQueryCoordinateBounds2() throws Exception {
+<b class="fc"><i>427</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>428</i>&nbsp;        expectedEx.expectMessage(&quot;coordinates are out of bounds&quot;);</b>
+<b class="fc"><i>429</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>430</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>431</i>&nbsp;        input.add(&quot;t 0 1 -1&quot;);</b>
+<b class="fc"><i>432</i>&nbsp;        testInput.validateQueries(input);</b>
+<b class="nc"><i>433</i>&nbsp;    }</b>
+<i>434</i>&nbsp;
+<i>435</i>&nbsp;    @org.junit.Test
+<i>436</i>&nbsp;    public void testQueryCoordinateBounds3() throws Exception {
+<b class="fc"><i>437</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>438</i>&nbsp;        expectedEx.expectMessage(&quot;coordinates are out of bounds&quot;);</b>
+<b class="fc"><i>439</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>440</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>441</i>&nbsp;        input.add(&quot;t 0 1000001 0&quot;);</b>
+<b class="fc"><i>442</i>&nbsp;        testInput.validateQueries(input);</b>
+<b class="nc"><i>443</i>&nbsp;    }</b>
+<i>444</i>&nbsp;
+<i>445</i>&nbsp;    @org.junit.Test
+<i>446</i>&nbsp;    public void testQueryCoordinateBounds4() throws Exception {
+<b class="fc"><i>447</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>448</i>&nbsp;        expectedEx.expectMessage(&quot;coordinates are out of bounds&quot;);</b>
+<b class="fc"><i>449</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>450</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>451</i>&nbsp;        input.add(&quot;t 0 0 1000001&quot;);</b>
+<b class="fc"><i>452</i>&nbsp;        testInput.validateQueries(input);</b>
+<b class="nc"><i>453</i>&nbsp;    }</b>
+<i>454</i>&nbsp;
+<i>455</i>&nbsp;    @org.junit.Test
+<i>456</i>&nbsp;    public void testQueryNumReturnResultsBounds1() throws Exception {
+<b class="fc"><i>457</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>458</i>&nbsp;        expectedEx.expectMessage(&quot;number of results to return is out of bounds&quot;);</b>
+<b class="fc"><i>459</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>460</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>461</i>&nbsp;        input.add(&quot;t -1 0 0&quot;);</b>
+<b class="fc"><i>462</i>&nbsp;        testInput.validateQueries(input);</b>
+<b class="nc"><i>463</i>&nbsp;    }</b>
+<i>464</i>&nbsp;
+<i>465</i>&nbsp;    @org.junit.Test
+<i>466</i>&nbsp;    public void testQueryNumReturnResultsBounds2() throws Exception {
+<b class="fc"><i>467</i>&nbsp;        expectedEx.expect(IllegalArgumentException.class);</b>
+<b class="fc"><i>468</i>&nbsp;        expectedEx.expectMessage(&quot;number of results to return is out of bounds&quot;);</b>
+<b class="fc"><i>469</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>470</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>471</i>&nbsp;        input.add(&quot;t 101 0 0&quot;);</b>
+<b class="fc"><i>472</i>&nbsp;        testInput.validateQueries(input);</b>
+<b class="nc"><i>473</i>&nbsp;    }</b>
+<b class="nc"><i>474</i>&nbsp;    //TODO create test for what queries, questions, and topics should look like</b>
+<b class="nc"><i>475</i>&nbsp;</b>
+<b class="nc"><i>476</i>&nbsp;    @org.junit.Test</b>
+<b class="nc"><i>477</i>&nbsp;    public void testCloseTopic() throws Exception {</b>
+<b class="fc"><i>478</i>&nbsp;        List&lt;Integer&gt; expectedValue = new ArrayList&lt;Integer&gt;();</b>
+<b class="nc"><i>479</i>&nbsp;        List&lt;Integer&gt;  returnedValue;</b>
+<b class="fc"><i>480</i>&nbsp;        expectedValue.add(0);</b>
+<b class="fc"><i>481</i>&nbsp;        expectedValue.add(1);</b>
+<b class="fc"><i>482</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>483</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>484</i>&nbsp;        input.add(&quot;5 6 1&quot;);</b>
+<b class="fc"><i>485</i>&nbsp;        input.add(&quot;0 0.0 0.0&quot;);</b>
+<b class="fc"><i>486</i>&nbsp;        input.add(&quot;1 1.0 1.0&quot;);</b>
+<b class="fc"><i>487</i>&nbsp;        input.add(&quot;2 2.0 2.0&quot;);</b>
+<b class="fc"><i>488</i>&nbsp;        input.add(&quot;3 3.0 3.0&quot;);</b>
+<b class="fc"><i>489</i>&nbsp;        input.add(&quot;4 4.0 4.0&quot;);</b>
+<b class="fc"><i>490</i>&nbsp;        input.add(&quot;0 1 0&quot;);</b>
+<b class="fc"><i>491</i>&nbsp;        input.add(&quot;1 2 0 1&quot;);</b>
+<b class="fc"><i>492</i>&nbsp;        input.add(&quot;2 3 0 1 2&quot;);</b>
+<b class="fc"><i>493</i>&nbsp;        input.add(&quot;3 0&quot;);</b>
+<b class="fc"><i>494</i>&nbsp;        input.add(&quot;4 0&quot;);</b>
+<b class="fc"><i>495</i>&nbsp;        input.add(&quot;5 2 1 2&quot;);</b>
+<b class="fc"><i>496</i>&nbsp;        input.add(&quot;t 2 0.0 0.0&quot;);</b>
+<b class="fc"><i>497</i>&nbsp;        testInput.validateInput(input);</b>
+<b class="fc"><i>498</i>&nbsp;        returnedValue=testInput.getClosestTopics(2, new Point2D.Double(0.0,0.0) );</b>
+<b class="fc"><i>499</i>&nbsp;        assertEquals(expectedValue,returnedValue);</b>
+<b class="fc"><i>500</i>&nbsp;    }</b>
+<b class="nc"><i>501</i>&nbsp;</b>
+<b class="nc"><i>502</i>&nbsp;    @org.junit.Test</b>
+<b class="nc"><i>503</i>&nbsp;    public void testCloseQuestion1() throws Exception {</b>
+<b class="fc"><i>504</i>&nbsp;        List&lt;Integer&gt; expectedValue = new ArrayList&lt;Integer&gt;();</b>
+<b class="nc"><i>505</i>&nbsp;        List&lt;Integer&gt;  returnedValue;</b>
+<b class="fc"><i>506</i>&nbsp;        expectedValue.add(5);</b>
+<b class="fc"><i>507</i>&nbsp;        expectedValue.add(2);</b>
+<b class="fc"><i>508</i>&nbsp;        expectedValue.add(1);</b>
+<b class="fc"><i>509</i>&nbsp;        expectedValue.add(0);</b>
+<b class="fc"><i>510</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>511</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>512</i>&nbsp;        input.add(&quot;5 6 1&quot;);</b>
+<b class="fc"><i>513</i>&nbsp;        input.add(&quot;0 0.0 0.0&quot;);</b>
+<b class="fc"><i>514</i>&nbsp;        input.add(&quot;1 1.0 1.0&quot;);</b>
+<b class="fc"><i>515</i>&nbsp;        input.add(&quot;2 2.0 2.0&quot;);</b>
+<b class="fc"><i>516</i>&nbsp;        input.add(&quot;3 3.0 3.0&quot;);</b>
+<b class="fc"><i>517</i>&nbsp;        input.add(&quot;4 4.0 4.0&quot;);</b>
+<b class="fc"><i>518</i>&nbsp;        input.add(&quot;0 1 0&quot;);</b>
+<b class="fc"><i>519</i>&nbsp;        input.add(&quot;1 2 0 1&quot;);</b>
+<b class="fc"><i>520</i>&nbsp;        input.add(&quot;2 3 0 1 2&quot;);</b>
+<b class="fc"><i>521</i>&nbsp;        input.add(&quot;3 0&quot;);</b>
+<b class="fc"><i>522</i>&nbsp;        input.add(&quot;4 0&quot;);</b>
+<b class="fc"><i>523</i>&nbsp;        input.add(&quot;5 2 1 2&quot;);</b>
+<b class="fc"><i>524</i>&nbsp;        input.add(&quot;q 5 100.0 100.0&quot;);</b>
+<b class="fc"><i>525</i>&nbsp;        testInput.validateInput(input);</b>
+<b class="fc"><i>526</i>&nbsp;        returnedValue=testInput.getClosestQuestions(5, new Point2D.Double(100.0,100.0) );</b>
+<b class="fc"><i>527</i>&nbsp;        assertEquals(expectedValue,returnedValue);</b>
+<b class="fc"><i>528</i>&nbsp;    }</b>
+<b class="nc"><i>529</i>&nbsp;</b>
+<b class="nc"><i>530</i>&nbsp;    @org.junit.Test</b>
+<b class="nc"><i>531</i>&nbsp;    public void testCloseQuestion2() throws Exception {</b>
+<b class="fc"><i>532</i>&nbsp;        List&lt;Integer&gt; expectedValue = new ArrayList&lt;Integer&gt;();</b>
+<b class="nc"><i>533</i>&nbsp;        List&lt;Integer&gt;  returnedValue;</b>
+<b class="fc"><i>534</i>&nbsp;        expectedValue.add(5);</b>
+<b class="fc"><i>535</i>&nbsp;        expectedValue.add(2);</b>
+<b class="fc"><i>536</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>537</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>538</i>&nbsp;        input.add(&quot;5 6 1&quot;);</b>
+<b class="fc"><i>539</i>&nbsp;        input.add(&quot;0 0.0 0.0&quot;);</b>
+<b class="fc"><i>540</i>&nbsp;        input.add(&quot;1 1.0 1.0&quot;);</b>
+<b class="fc"><i>541</i>&nbsp;        input.add(&quot;2 2.0 2.0&quot;);</b>
+<b class="fc"><i>542</i>&nbsp;        input.add(&quot;3 3.0 3.0&quot;);</b>
+<b class="fc"><i>543</i>&nbsp;        input.add(&quot;4 4.0 4.0&quot;);</b>
+<b class="fc"><i>544</i>&nbsp;        input.add(&quot;0 1 0&quot;);</b>
+<b class="fc"><i>545</i>&nbsp;        input.add(&quot;1 2 0 1&quot;);</b>
+<b class="fc"><i>546</i>&nbsp;        input.add(&quot;2 3 0 1 2&quot;);</b>
+<b class="fc"><i>547</i>&nbsp;        input.add(&quot;3 0&quot;);</b>
+<b class="fc"><i>548</i>&nbsp;        input.add(&quot;4 0&quot;);</b>
+<b class="fc"><i>549</i>&nbsp;        input.add(&quot;5 2 1 2&quot;);</b>
+<b class="fc"><i>550</i>&nbsp;        input.add(&quot;q 2 100.0 100.0&quot;);</b>
+<b class="fc"><i>551</i>&nbsp;        testInput.validateInput(input);</b>
+<b class="fc"><i>552</i>&nbsp;        returnedValue=testInput.getClosestQuestions(2, new Point2D.Double(100.0,100.0) );</b>
+<b class="fc"><i>553</i>&nbsp;        assertEquals(expectedValue,returnedValue);</b>
+<b class="fc"><i>554</i>&nbsp;    }</b>
+<b class="nc"><i>555</i>&nbsp;</b>
+<b class="nc"><i>556</i>&nbsp;    @org.junit.Test</b>
+<b class="nc"><i>557</i>&nbsp;    public void testCloseQuestion3() throws Exception {</b>
+<b class="fc"><i>558</i>&nbsp;        List&lt;Integer&gt; expectedValue = new ArrayList&lt;Integer&gt;();</b>
+<b class="nc"><i>559</i>&nbsp;        List&lt;Integer&gt;  returnedValue;</b>
+<b class="fc"><i>560</i>&nbsp;        expectedValue.add(5);</b>
+<b class="fc"><i>561</i>&nbsp;        expectedValue.add(2);</b>
+<b class="fc"><i>562</i>&nbsp;        expectedValue.add(1);</b>
+<b class="fc"><i>563</i>&nbsp;        expectedValue.add(3);</b>
+<b class="fc"><i>564</i>&nbsp;        expectedValue.add(0);</b>
+<b class="fc"><i>565</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>566</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>567</i>&nbsp;        input.add(&quot;5 6 1&quot;);</b>
+<b class="fc"><i>568</i>&nbsp;        input.add(&quot;0 0.0 0.0&quot;);</b>
+<b class="fc"><i>569</i>&nbsp;        input.add(&quot;1 1.0 1.0&quot;);</b>
+<b class="fc"><i>570</i>&nbsp;        input.add(&quot;2 2.0 2.0&quot;);</b>
+<b class="fc"><i>571</i>&nbsp;        input.add(&quot;3 3.0 3.0&quot;);</b>
+<b class="fc"><i>572</i>&nbsp;        input.add(&quot;4 4.0 4.0&quot;);</b>
+<b class="fc"><i>573</i>&nbsp;        input.add(&quot;0 1 0&quot;);</b>
+<b class="fc"><i>574</i>&nbsp;        input.add(&quot;1 2 0 1&quot;);</b>
+<b class="fc"><i>575</i>&nbsp;        input.add(&quot;2 3 0 1 2&quot;);</b>
+<b class="fc"><i>576</i>&nbsp;        input.add(&quot;3 1 0&quot;);</b>
+<b class="fc"><i>577</i>&nbsp;        input.add(&quot;4 0&quot;);</b>
+<b class="fc"><i>578</i>&nbsp;        input.add(&quot;5 2 1 2&quot;);</b>
+<b class="fc"><i>579</i>&nbsp;        input.add(&quot;q 2 100.0 100.0&quot;);</b>
+<b class="fc"><i>580</i>&nbsp;        testInput.validateInput(input);</b>
+<b class="fc"><i>581</i>&nbsp;        returnedValue=testInput.getClosestQuestions(5, new Point2D.Double(100.0,100.0) );</b>
+<b class="fc"><i>582</i>&nbsp;        assertEquals(expectedValue,returnedValue);</b>
+<b class="fc"><i>583</i>&nbsp;    }</b>
+<b class="nc"><i>584</i>&nbsp;</b>
+<b class="nc"><i>585</i>&nbsp;    @org.junit.Test</b>
+<b class="nc"><i>586</i>&nbsp;    public void testCloseQuestion4() throws Exception {</b>
+<b class="fc"><i>587</i>&nbsp;        List&lt;Integer&gt; expectedValue = new ArrayList&lt;Integer&gt;();</b>
+<b class="nc"><i>588</i>&nbsp;        List&lt;Integer&gt;  returnedValue;</b>
+<b class="fc"><i>589</i>&nbsp;        expectedValue.add(5);</b>
+<b class="fc"><i>590</i>&nbsp;        expectedValue.add(2);</b>
+<b class="fc"><i>591</i>&nbsp;        expectedValue.add(1);</b>
+<b class="fc"><i>592</i>&nbsp;        expectedValue.add(3);</b>
+<b class="fc"><i>593</i>&nbsp;        expectedValue.add(0);</b>
+<b class="fc"><i>594</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>595</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>596</i>&nbsp;        input.add(&quot;5 6 1&quot;);</b>
+<b class="fc"><i>597</i>&nbsp;        input.add(&quot;0 0.0 0.0&quot;);</b>
+<b class="fc"><i>598</i>&nbsp;        input.add(&quot;1 1.0 1.0&quot;);</b>
+<b class="fc"><i>599</i>&nbsp;        input.add(&quot;2 2.0 2.0&quot;);</b>
+<b class="fc"><i>600</i>&nbsp;        input.add(&quot;3 3.0 3.0&quot;);</b>
+<b class="fc"><i>601</i>&nbsp;        input.add(&quot;4 4.0 4.0&quot;);</b>
+<b class="fc"><i>602</i>&nbsp;        input.add(&quot;0 1 0&quot;);</b>
+<b class="fc"><i>603</i>&nbsp;        input.add(&quot;1 2 0 1&quot;);</b>
+<b class="fc"><i>604</i>&nbsp;        input.add(&quot;2 3 0 1 2&quot;);</b>
+<b class="fc"><i>605</i>&nbsp;        input.add(&quot;3 1 0&quot;);</b>
+<b class="fc"><i>606</i>&nbsp;        input.add(&quot;4 0&quot;);</b>
+<b class="fc"><i>607</i>&nbsp;        input.add(&quot;5 2 1 2&quot;);</b>
+<b class="fc"><i>608</i>&nbsp;        input.add(&quot;q 2 100.0 100.0&quot;);</b>
+<b class="fc"><i>609</i>&nbsp;        testInput.validateInput(input);</b>
+<b class="fc"><i>610</i>&nbsp;        returnedValue=testInput.getClosestQuestions(5, new Point2D.Double(100.0,100.0) );</b>
+<b class="fc"><i>611</i>&nbsp;        assertEquals(expectedValue,returnedValue);</b>
+<b class="fc"><i>612</i>&nbsp;    }</b>
+<b class="nc"><i>613</i>&nbsp;</b>
+<b class="nc"><i>614</i>&nbsp;    @org.junit.Test</b>
+<b class="nc"><i>615</i>&nbsp;    public void testEndToEnd() throws Exception {</b>
+<b class="fc"><i>616</i>&nbsp;        List&lt;Integer&gt; expectedValue = new ArrayList&lt;Integer&gt;();</b>
+<b class="nc"><i>617</i>&nbsp;        List&lt;Integer&gt;  returnedValue;</b>
+<b class="fc"><i>618</i>&nbsp;        expectedValue.add(0);</b>
+<b class="fc"><i>619</i>&nbsp;        expectedValue.add(1);</b>
+<b class="fc"><i>620</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>621</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>622</i>&nbsp;        input.add(&quot;5 6 2&quot;);</b>
+<b class="fc"><i>623</i>&nbsp;        input.add(&quot;0 0.0 0.0&quot;);</b>
+<b class="fc"><i>624</i>&nbsp;        input.add(&quot;1 1.0 1.0&quot;);</b>
+<b class="fc"><i>625</i>&nbsp;        input.add(&quot;2 2.0 2.0&quot;);</b>
+<b class="fc"><i>626</i>&nbsp;        input.add(&quot;3 3.0 3.0&quot;);</b>
+<b class="fc"><i>627</i>&nbsp;        input.add(&quot;4 4.0 4.0&quot;);</b>
+<b class="fc"><i>628</i>&nbsp;        input.add(&quot;0 1 0&quot;);</b>
+<b class="fc"><i>629</i>&nbsp;        input.add(&quot;1 2 0 1&quot;);</b>
+<b class="fc"><i>630</i>&nbsp;        input.add(&quot;2 3 0 1 2&quot;);</b>
+<b class="fc"><i>631</i>&nbsp;        input.add(&quot;3 0&quot;);</b>
+<b class="fc"><i>632</i>&nbsp;        input.add(&quot;4 0&quot;);</b>
+<b class="fc"><i>633</i>&nbsp;        input.add(&quot;5 2 1 2&quot;);</b>
+<b class="fc"><i>634</i>&nbsp;        input.add(&quot;t 2 0.0 0.0&quot;);</b>
+<b class="fc"><i>635</i>&nbsp;        input.add(&quot;q 5 100.0 100.0&quot;);</b>
+<b class="fc"><i>636</i>&nbsp;        testInput.validateInput(input);</b>
+<b class="fc"><i>637</i>&nbsp;        testInput.runQueries();</b>
+<b class="fc"><i>638</i>&nbsp;    }</b>
+<b class="nc"><i>639</i>&nbsp;</b>
+<b class="nc"><i>640</i>&nbsp;</b>
+<b class="nc"><i>641</i>&nbsp;    @org.junit.Test</b>
+<b class="nc"><i>642</i>&nbsp;    public void testEndToEnd2() throws Exception {</b>
+<b class="fc"><i>643</i>&nbsp;        List&lt;Integer&gt; expectedValue = new ArrayList&lt;Integer&gt;();</b>
+<b class="nc"><i>644</i>&nbsp;        List&lt;Integer&gt;  returnedValue;</b>
+<b class="fc"><i>645</i>&nbsp;        expectedValue.add(0);</b>
+<b class="fc"><i>646</i>&nbsp;        expectedValue.add(1);</b>
+<b class="fc"><i>647</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>648</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>649</i>&nbsp;        input.add(&quot;3 6 2&quot;);</b>
+<b class="fc"><i>650</i>&nbsp;        input.add(&quot;0 0.0 0.0&quot;);</b>
+<b class="fc"><i>651</i>&nbsp;        input.add(&quot;1 1.0 1.0&quot;);</b>
+<b class="fc"><i>652</i>&nbsp;        input.add(&quot;2 2.0 2.0&quot;);</b>
+<b class="fc"><i>653</i>&nbsp;        input.add(&quot;0 1 0&quot;);</b>
+<b class="fc"><i>654</i>&nbsp;        input.add(&quot;1 2 0 1&quot;);</b>
+<b class="fc"><i>655</i>&nbsp;        input.add(&quot;2 3 0 1 2&quot;);</b>
+<b class="fc"><i>656</i>&nbsp;        input.add(&quot;3 0&quot;);</b>
+<b class="fc"><i>657</i>&nbsp;        input.add(&quot;4 0&quot;);</b>
+<b class="fc"><i>658</i>&nbsp;        input.add(&quot;5 2 1 2&quot;);</b>
+<b class="fc"><i>659</i>&nbsp;        input.add(&quot;t 2 0.0 0.0&quot;);</b>
+<b class="fc"><i>660</i>&nbsp;        input.add(&quot;q 5 100.0 100.0&quot;);</b>
+<b class="fc"><i>661</i>&nbsp;        testInput.validateInput(input);</b>
+<b class="fc"><i>662</i>&nbsp;        testInput.runQueries();</b>
+<b class="fc"><i>663</i>&nbsp;    }</b>
+<b class="nc"><i>664</i>&nbsp;</b>
+<b class="nc"><i>665</i>&nbsp;</b>
+<b class="nc"><i>666</i>&nbsp;    @org.junit.Test</b>
+<b class="nc"><i>667</i>&nbsp;    public void testEndToEnd3() throws Exception {</b>
+<b class="fc"><i>668</i>&nbsp;        List&lt;Integer&gt; expectedValue = new ArrayList&lt;Integer&gt;();</b>
+<b class="nc"><i>669</i>&nbsp;        List&lt;Integer&gt;  returnedValue;</b>
+<b class="fc"><i>670</i>&nbsp;        expectedValue.add(0);</b>
+<b class="fc"><i>671</i>&nbsp;        expectedValue.add(1);</b>
+<b class="fc"><i>672</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>673</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>674</i>&nbsp;        input.add(&quot;4 6 2&quot;);</b>
+<b class="fc"><i>675</i>&nbsp;        input.add(&quot;0 0.0 0.0&quot;);</b>
+<b class="fc"><i>676</i>&nbsp;        input.add(&quot;1 1.0 1.0&quot;);</b>
+<b class="fc"><i>677</i>&nbsp;        input.add(&quot;2 2.00141471435 2.0&quot;);</b>
+<b class="fc"><i>678</i>&nbsp;        input.add(&quot;3 2 2&quot;);</b>
+<b class="fc"><i>679</i>&nbsp;        input.add(&quot;0 1 0&quot;);</b>
+<b class="fc"><i>680</i>&nbsp;        input.add(&quot;1 2 0 1&quot;);</b>
+<b class="fc"><i>681</i>&nbsp;        input.add(&quot;2 3 0 1 2&quot;);</b>
+<b class="fc"><i>682</i>&nbsp;        input.add(&quot;3 1 3&quot;);</b>
+<b class="fc"><i>683</i>&nbsp;        input.add(&quot;4 0&quot;);</b>
+<b class="fc"><i>684</i>&nbsp;        input.add(&quot;5 2 1 2&quot;);</b>
+<b class="fc"><i>685</i>&nbsp;        input.add(&quot;t 2 0.0 0.0&quot;);</b>
+<b class="fc"><i>686</i>&nbsp;        input.add(&quot;q 5 3.0 3.0&quot;);</b>
+<b class="fc"><i>687</i>&nbsp;        testInput.validateInput(input);</b>
+<b class="fc"><i>688</i>&nbsp;        testInput.runQueries();</b>
+<b class="fc"><i>689</i>&nbsp;    }</b>
+<b class="fc"><i>690</i>&nbsp;</b>
+<b class="fc"><i>691</i>&nbsp;    @org.junit.Test</b>
+<b class="fc"><i>692</i>&nbsp;    public void testEndToEnd4() throws Exception {</b>
+<b class="fc"><i>693</i>&nbsp;        List&lt;Integer&gt; expectedValue = new ArrayList&lt;Integer&gt;();</b>
+<b class="fc"><i>694</i>&nbsp;        List&lt;Integer&gt;  returnedValue;</b>
+<b class="fc"><i>695</i>&nbsp;        expectedValue.add(0);</b>
+<b class="fc"><i>696</i>&nbsp;        expectedValue.add(1);</b>
+<b class="fc"><i>697</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>698</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>699</i>&nbsp;        input.add(&quot;3 6 2&quot;);</b>
+<b class="fc"><i>700</i>&nbsp;        input.add(&quot;0 0.0 0.0&quot;);</b>
+<b class="fc"><i>701</i>&nbsp;        input.add(&quot;1 1.0 1.0&quot;);</b>
+<b class="fc"><i>702</i>&nbsp;        input.add(&quot;2 2.0 2.0&quot;);</b>
+<b class="fc"><i>703</i>&nbsp;        input.add(&quot;0 1 0&quot;);</b>
+<b class="fc"><i>704</i>&nbsp;        input.add(&quot;1 2 0 1&quot;);</b>
+<b class="fc"><i>705</i>&nbsp;        input.add(&quot;2 3 0 1 2&quot;);</b>
+<b class="fc"><i>706</i>&nbsp;        input.add(&quot;3 0&quot;);</b>
+<b class="fc"><i>707</i>&nbsp;        input.add(&quot;4 0&quot;);</b>
+<b class="fc"><i>708</i>&nbsp;        input.add(&quot;5 2 1 2&quot;);</b>
+<b class="fc"><i>709</i>&nbsp;        input.add(&quot;t 5 0.0 0.0&quot;);</b>
+<b class="fc"><i>710</i>&nbsp;        input.add(&quot;q 5 100.0 100.0&quot;);</b>
+<b class="fc"><i>711</i>&nbsp;        testInput.validateInput(input);</b>
+<b class="fc"><i>712</i>&nbsp;        testInput.runQueries();</b>
+<b class="fc"><i>713</i>&nbsp;    }</b>
+<b class="nc"><i>714</i>&nbsp;</b>
+<i>715</i>&nbsp;    @org.junit.Test
+<b class="nc"><i>716</i>&nbsp;    public void testStressEndToEnd1() throws Exception {</b>
+<b class="fc"><i>717</i>&nbsp;        Boolean expectedValue = true;</b>
+<b class="nc"><i>718</i>&nbsp;        Boolean returnedValue;</b>
+<b class="fc"><i>719</i>&nbsp;        Solution testInput = new Solution();</b>
+<b class="fc"><i>720</i>&nbsp;        List&lt;String&gt; input = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>721</i>&nbsp;        BufferedReader br = new BufferedReader(new FileReader(&quot;2testInput.txt&quot;));</b>
+<i>722</i>&nbsp;        String line;
+<b class="fc"><i>723</i>&nbsp;        while ((line = br.readLine()) != null) {</b>
+<b class="fc"><i>724</i>&nbsp;            input.add(line);</b>
+<i>725</i>&nbsp;        }
+<b class="fc"><i>726</i>&nbsp;        br.close();</b>
+<b class="fc"><i>727</i>&nbsp;        returnedValue = testInput.validateInput(input);</b>
+<b class="fc"><i>728</i>&nbsp;        testInput.runQueries();</b>
+<b class="fc"><i>729</i>&nbsp;    }</b>
+<i>730</i>&nbsp;
+<i>731</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2014-08-31 17:56</div>
+</div>
+</body>
+</html>
