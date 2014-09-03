@@ -1,9 +1,4 @@
-import com.sun.corba.se.impl.orbutil.closure.Constant;
-
-import java.awt.*;
-import java.awt.geom.Arc2D;
 import java.awt.geom.Point2D;
-import java.awt.print.Book;
 import java.io.*;
 import java.util.*;
 import java.util.List;
@@ -14,7 +9,7 @@ import java.util.List;
 public class Solution {
 
     private List<Query> queriesFromInput = new ArrayList<Query>();
-    Hashtable<Integer, QuoraData> topicsFromInput = new Hashtable<Integer, QuoraData>();
+    HashMap<Integer, QuoraData> topicsFromInput = new HashMap<Integer, QuoraData>();
     QuoraData[] topicsFromInputArray;
     QuoraData[] questionsFromInputArray;
     public static final  Integer MAXNUMBEROFQUESTION = 1000;
@@ -151,18 +146,6 @@ public class Solution {
 
             if (numberOfTopics > 0) {
                 sumOfNumberOfTopicsForQuestions = sumOfNumberOfTopicsForQuestions+numberOfTopics;
-                /*
-                for (int i = 2; i < splitQuestionLine.length; i++) {
-                    try {
-                        //topicsForThisQuestion.add(Integer.parseInt(splitQuestionLine[i]));
-                        topicForThisQuestion= Integer.parseInt(splitQuestionLine[i]);
-                    } catch (NumberFormatException ex) {
-                        throw new NumberFormatException("invalid format for number of topic for question");
-                    }
-                    this.topicsFromInput.get(topicForThisQuestion).questionsForThisTopic.add(new Question(id));
-
-                }
-                */
             }
         }
 
@@ -240,7 +223,6 @@ public class Solution {
         List<Integer> toPrint;
         for(Query query:queriesFromInput) {
             if(query.type.equalsIgnoreCase("t")) {
-                //System.out.println(getClosestTopics(query.numberOfResultsToReturn, query.cords).toString().replace("[","").replace("]","").replace(",",""));
                 toPrint = getClosestTopics(query.numberOfResultsToReturn, query.cords);
                 BufferedWriter out = null;
                 try {
@@ -248,7 +230,6 @@ public class Solution {
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                //long start = System.currentTimeMillis();
                 Boolean firstLine = true;
                 for (Integer num : toPrint) {
                     try {
@@ -273,8 +254,6 @@ public class Solution {
                 }
             }
             else if (query.type.equalsIgnoreCase("q")) {
-                //System.out.println(i.toString() + ":"+getClosestQuestions(query.numberOfResultsToReturn,query.cords).toString().replace("[","").replace("]","").replace(",",""));
-                //System.out.println(getClosestQuestions(query.numberOfResultsToReturn,query.cords).toString().replace("[","").replace("]","").replace(",",""));
                 toPrint = getClosestQuestions(query.numberOfResultsToReturn,query.cords);
                 BufferedWriter out = null;
                 try {
@@ -282,11 +261,9 @@ public class Solution {
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                //long start = System.currentTimeMillis();
                 Boolean firstLine = true;
                 for (Integer num : toPrint) {
                     try {
-                        //out.write("abcdefghijk ");
                         if (firstLine) {
                             out.write(String.valueOf(num));
                             firstLine = false;
@@ -294,7 +271,6 @@ public class Solution {
                             out.write(" "+String.valueOf(num));
                         }
 
-                        //out.write('\n');
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -305,9 +281,7 @@ public class Solution {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                //System.err.println("Loop time: " + (System.currentTimeMillis() - start));
             }
-            //i++;
         }
     }
 
@@ -335,7 +309,7 @@ public class Solution {
 
     public List<Integer> getClosestQuestions(Integer numberToReturn, Point2D.Double center) {
         List<Integer> returnListOfQuestions = new ArrayList<Integer>();
-        Hashtable<Integer,Integer> returnHashOfQuestions = new Hashtable<Integer,Integer>();
+        HashMap<Integer,Integer> returnHashOfQuestions = new HashMap<Integer,Integer>();
         Distance currentDistance;
         QuoraData currentQuestion;
         Integer internalMaxNumberToReturn;
@@ -361,38 +335,55 @@ public class Solution {
         return returnListOfQuestions;
     }
 
-    public Distance[] getUnorderedArrayOfTopics(Point2D.Double center, Boolean isAQuestion) {
+    public HashMap<Integer, Distance> createHashMapOfQuestionsWithMinDistance(Point2D.Double center) {
+        HashMap<Integer, Distance> HashMapOfMinDistancesForQuestion = new HashMap<Integer, Distance>();
+        QuoraData question;
         Double calculatedDistance;
-        Distance[] unorderedArray;// = new Distance[this.topicsFromInput.size()];
-        Hashtable<Integer, Distance> hashTableOfMinDistancesForQuestion = new Hashtable<Integer, Distance>();
+
+        for(int k=0; k< this.questionsFromInputArray.length; k++) {
+            //only get min for questionl
+            question = this.questionsFromInputArray[k];
+            calculatedDistance = Math.sqrt((question.cords.getX() - center.getX()) * (question.cords.getX() - center.getX()) + (question.cords.getY() - center.getY()) * (question.cords.getY() - center.getY()));
+            if(HashMapOfMinDistancesForQuestion.containsKey(question.id)) {
+                if(HashMapOfMinDistancesForQuestion.get(question.id).distance > calculatedDistance) {
+                    HashMapOfMinDistancesForQuestion.put(question.id, new Distance(calculatedDistance, question));
+                }
+            } else {
+                HashMapOfMinDistancesForQuestion.put(question.id, new Distance(calculatedDistance, question));
+            }
+        }
+
+        return HashMapOfMinDistancesForQuestion;
+    }
+
+    public Distance[] getUnorderedArrayOfData(Point2D.Double center, Boolean isAQuestion) {
+        Double calculatedDistance;
+        Distance[] unorderedArray;
+        HashMap<Integer, Distance> HashMapOfMinDistancesForQuestion = new HashMap<Integer, Distance>();
         Integer dataAddSoFar=0;
-        Enumeration<Integer> enumKey;
 
         QuoraData topic;
         QuoraData question;
 
         if(isAQuestion) {
             unorderedArray = new Distance[this.questionsFromInputArray.length];
+            /*
             for(int k=0; k< this.questionsFromInputArray.length; k++) {
                 //only get min for questionl
                 question = this.questionsFromInputArray[k];
                 calculatedDistance = Math.sqrt((question.cords.getX() - center.getX()) * (question.cords.getX() - center.getX()) + (question.cords.getY() - center.getY()) * (question.cords.getY() - center.getY()));
-                if(hashTableOfMinDistancesForQuestion.containsKey(question.id)) {
-                    if(hashTableOfMinDistancesForQuestion.get(question.id).distance > calculatedDistance) {
-                        hashTableOfMinDistancesForQuestion.put(question.id, new Distance(calculatedDistance, question));
+                if(HashMapOfMinDistancesForQuestion.containsKey(question.id)) {
+                    if(HashMapOfMinDistancesForQuestion.get(question.id).distance > calculatedDistance) {
+                        HashMapOfMinDistancesForQuestion.put(question.id, new Distance(calculatedDistance, question));
                     }
                 } else {
-                    hashTableOfMinDistancesForQuestion.put(question.id, new Distance(calculatedDistance, question));
+                    HashMapOfMinDistancesForQuestion.put(question.id, new Distance(calculatedDistance, question));
                 }
-                //unorderedArray[i] = new Distance(calculatedDistance, question);
-                //i++;
-
             }
-            enumKey = hashTableOfMinDistancesForQuestion.keys();
-            while(enumKey.hasMoreElements()) {
-                Integer key = enumKey.nextElement();
-                Distance val = hashTableOfMinDistancesForQuestion.get(key);
-                unorderedArray[dataAddSoFar]=val;
+            */
+            HashMapOfMinDistancesForQuestion = createHashMapOfQuestionsWithMinDistance(center);
+            for(Map.Entry<Integer, Distance> entry : HashMapOfMinDistancesForQuestion.entrySet()){
+                unorderedArray[dataAddSoFar]=entry.getValue();
                 dataAddSoFar++;
             }
         } else {
@@ -411,7 +402,7 @@ public class Solution {
         List<Distance> returnList = new ArrayList<Distance>();
         Distance[] unorderedArray = new Distance[this.topicsFromInput.size()];
         Distance kthSmallestDistance;
-        unorderedArray = getUnorderedArrayOfTopics(center,question);
+        unorderedArray = getUnorderedArrayOfData(center,question);
         kthSmallestDistance =selectKth(unorderedArray,kthSmallest);
 
         for(int w=0; w<unorderedArray.length; w ++) {
@@ -422,7 +413,6 @@ public class Solution {
         Collections.sort(returnList);
         return returnList;
     }
-
 
     public static Distance selectKth(Distance[] arr, int k) {
         if (arr == null )
@@ -500,28 +490,7 @@ public class Solution {
             this.cords = new Point2D.Double(x,y);
         }
     }
-/*
-    public class Topic {
-        Point2D.Double cords;
-        Integer id;
-        List<Question> questionsForThisTopic = new ArrayList<Question>();
-        Topic(Integer id, Double x, Double y) {
-            this.id = id;
-            this.cords = new Point2D.Double(x,y);
-        }
-    }
 
-    private class Question implements Comparable<Question>{
-        Integer id;
-        Question(Integer id) {//, List<Integer> topicIds) {
-            this.id = id;
-        }
-        public int compareTo(Question other)
-        {
-            return other.id.compareTo(id);
-        }
-    }
-*/
     private class Query {
         String type;
         Point2D.Double cords;

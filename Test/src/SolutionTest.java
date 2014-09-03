@@ -472,6 +472,7 @@ public class SolutionTest {
         input.add("t 101 0 0");
         testInput.validateQueries(input);
     }
+
     //TODO create test for what queries, questions, and topics should look like
 
     @org.junit.Test
@@ -859,32 +860,37 @@ public class SolutionTest {
     public void testStressEndToEnd4() throws Exception {
         Process p;
         StringBuffer output = new StringBuffer();
-        try {
-            p = Runtime.getRuntime().exec("./gen.sh");
-            p.waitFor();
-
-            BufferedReader reader =
-                    new BufferedReader(new InputStreamReader(p.getInputStream()));
-
-            String line = "";
-            while ((line = reader.readLine())!= null) {
-                output.append(line + "\n");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        Boolean expectedValue = true;
-        Boolean returnedValue;
-        Solution testInput = new Solution();
-        List<String> input = new ArrayList<String>();
-        BufferedReader br = new BufferedReader(new FileReader("6testInput.txt"));
+        Solution testInput;
+        List<String> input;
+        BufferedReader br;
         String line;
-        while ((line = br.readLine()) != null) {
-            input.add(line);
+        for(int i =0 ; i< 10; i++) {
+            try {
+                p = Runtime.getRuntime().exec("./gen.sh");
+                p.waitFor();
+
+                BufferedReader reader =
+                        new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+                line = "";
+                while ((line = reader.readLine()) != null) {
+                    output.append(line + "\n");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Boolean expectedValue = true;
+            Boolean returnedValue;
+            testInput = new Solution();
+            input = new ArrayList<String>();
+            br = new BufferedReader(new FileReader("6testInput.txt"));
+            while ((line = br.readLine()) != null) {
+                input.add(line);
+            }
+            br.close();
+            returnedValue = testInput.validateInput(input);
+            testInput.runQueries();
         }
-        br.close();
-        returnedValue = testInput.validateInput(input);
-        testInput.runQueries();
     }
 
 }
