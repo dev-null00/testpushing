@@ -863,8 +863,8 @@ public class SolutionTest {
         Solution testInput;
         List<String> input;
         BufferedReader br;
-        String line;
-        for(int i =0 ; i< 10; i++) {
+        String line
+        for(int i =0 ; i< 100; i++) {
             try {
                 p = Runtime.getRuntime().exec("./gen.sh");
                 p.waitFor();

@@ -1,6 +1,6 @@
 #!/bin/bash
 COUNTER=0
-while [  $COUNTER -lt 10 ]; do
+while [  $COUNTER -lt 100 ]; do
 	./generateTestFile.py >4testInput.txt
 	echo "java"
 	java -jar ./out/artifacts/NearbyChallenge_jar/NearbyChallenge.jar < 4testInput.txt  >output.txt

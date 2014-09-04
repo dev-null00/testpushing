@@ -10,6 +10,7 @@ public class Solution {
 
     private List<Query> queriesFromInput = new ArrayList<Query>();
     HashMap<Integer, QuoraData> topicsFromInput = new HashMap<Integer, QuoraData>();
+    HashMap<Integer, QuoraData> questionsFromInput = new HashMap<Integer, QuoraData>();
     QuoraData[] topicsFromInputArray;
     QuoraData[] questionsFromInputArray;
     public static final  Integer MAXNUMBEROFQUESTION = 1000;
@@ -111,7 +112,7 @@ public class Solution {
         Integer topicForThisQuestion ;
         Integer id;
         Integer numberOfTopics;
-        Integer sumOfNumberOfTopicsForQuestions = 0;
+        Integer sumOfNumberOfUsableQuestions = 0;
         for (String question : inputQuestions) {
             splitQuestionLine = question.split(" ");
             if(splitQuestionLine.length < 2| splitQuestionLine.length > 12) {
@@ -145,11 +146,11 @@ public class Solution {
             }
 
             if (numberOfTopics > 0) {
-                sumOfNumberOfTopicsForQuestions = sumOfNumberOfTopicsForQuestions+numberOfTopics;
+                sumOfNumberOfUsableQuestions = sumOfNumberOfUsableQuestions+1;
             }
         }
 
-        questionsFromInputArray = new QuoraData[sumOfNumberOfTopicsForQuestions];
+        questionsFromInputArray = new QuoraData[sumOfNumberOfUsableQuestions];
 
         Integer questionsSoFar =0;
         for (String question : inputQuestions) {
@@ -163,9 +164,15 @@ public class Solution {
                     throw new NumberFormatException("invalid format for number of topic for question");
                 }
                 id = Integer.parseInt(splitQuestionLine[0]);
-                //this.topicsFromInput.get(topicForThisQuestion).questionsForThisTopic.add(new Question(id));
-                questionsFromInputArray[questionsSoFar] = new QuoraData(id, this.topicsFromInput.get(topicForThisQuestion).cords.getX(), this.topicsFromInput.get(topicForThisQuestion).cords.getY());
-                questionsSoFar++;
+                if(!questionsFromInput.containsKey(id)) {
+                    List<QuoraData> otherData = new ArrayList<QuoraData>();
+                    otherData.add(this.topicsFromInput.get(topicForThisQuestion));
+                    questionsFromInput.put(id, new QuoraData(id ,otherData));
+                    questionsFromInputArray[questionsSoFar] =questionsFromInput.get(id);
+                    questionsSoFar++;
+                } else {
+                    questionsFromInput.get(id).otherData.add(this.topicsFromInput.get(topicForThisQuestion));
+                }
             }
         }
         returnValue = true;
@@ -287,54 +294,61 @@ public class Solution {
 
     public List<Integer> getClosestTopics(Integer numberToReturn, Point2D.Double center) {
         List<Integer> returnListOfTopics = new ArrayList<Integer>();
-        Distance currentDistance;
-        Integer internalMaxNumberToReturn;
-        List<Distance> topicsOrderByDistance;
+        List<Distance> kSmallestDistances = new ArrayList<Distance>();
+        Distance[] unorderedArray = new Distance[this.topicsFromInput.size()];
 
-        topicsOrderByDistance = calculateTopicDistances3(center, numberToReturn,false);
+        for(int k=0; k< this.topicsFromInputArray.length; k++) {
+            unorderedArray[k] = new Distance(this.topicsFromInputArray[k]);
+            unorderedArray[k].setCenter(center);
+        }
 
-        if(topicsOrderByDistance.size()<numberToReturn) {
-            internalMaxNumberToReturn=topicsOrderByDistance.size();
+        Distance kthSmallestDistance;
+        kthSmallestDistance =selectKth(unorderedArray,numberToReturn);
+
+        for(int w=0; w<unorderedArray.length; w ++) {
+            if(unorderedArray[w].minDistance<=kthSmallestDistance.minDistance) {
+                kSmallestDistances.add(unorderedArray[w]);
+            }
         }
-        else {
-            internalMaxNumberToReturn=numberToReturn;
+        Collections.sort(kSmallestDistances);
+        if(kSmallestDistances.size()< numberToReturn) {
+            numberToReturn = kSmallestDistances.size();
         }
-        for(int i=0; i<internalMaxNumberToReturn; i++)
-        {
-            currentDistance = topicsOrderByDistance.get(i);
-            returnListOfTopics.add(currentDistance.dataBeingHeld.id);
+        for(int i=0; i<numberToReturn; i++) {
+            returnListOfTopics.add(kSmallestDistances.get(i).dataBeingHeld.id);
         }
+
         return returnListOfTopics;
     }
 
     public List<Integer> getClosestQuestions(Integer numberToReturn, Point2D.Double center) {
         List<Integer> returnListOfQuestions = new ArrayList<Integer>();
-        HashMap<Integer,Integer> returnHashOfQuestions = new HashMap<Integer,Integer>();
-        Distance currentDistance;
-        QuoraData currentQuestion;
-        Integer internalMaxNumberToReturn;
-        List<Distance> questionsOrderByDistance;
+        List<Distance> kSmallestDistances = new ArrayList<Distance>();
+        Distance[] unorderedArray = new Distance[this.questionsFromInputArray.length];
 
-        questionsOrderByDistance = calculateTopicDistances3(center, numberToReturn, true);
+        for(int k=0; k< this.questionsFromInputArray.length; k++) {
+            unorderedArray[k] = new Distance(this.questionsFromInputArray[k]);
+            unorderedArray[k].setCenter(center);
+        }
 
-        if(questionsOrderByDistance.size()<numberToReturn) {
-            internalMaxNumberToReturn=questionsOrderByDistance.size();
-        }
-        else {
-            internalMaxNumberToReturn=numberToReturn;
-        }
-        for(int i=0; i<internalMaxNumberToReturn; i++)
-        {
-            currentDistance = questionsOrderByDistance.get(i);
-            if(!returnHashOfQuestions.containsKey(currentDistance.dataBeingHeld.id)) {
-                returnListOfQuestions.add(currentDistance.dataBeingHeld.id);
-                returnHashOfQuestions.put(currentDistance.dataBeingHeld.id,1);
+        Distance kthSmallestDistance;
+        kthSmallestDistance =selectKth(unorderedArray,numberToReturn);
+
+        for(int w=0; w<unorderedArray.length; w ++) {
+            if(unorderedArray[w].minDistance<=kthSmallestDistance.minDistance) {
+                kSmallestDistances.add(unorderedArray[w]);
             }
-            //returnListOfQuestions.add(currentDistance.dataBeingHeld.id);
+        }
+        Collections.sort(kSmallestDistances);
+        if(kSmallestDistances.size()< numberToReturn) {
+            numberToReturn = kSmallestDistances.size();
+        }
+        for(int i=0; i<numberToReturn; i++) {
+            returnListOfQuestions.add(kSmallestDistances.get(i).dataBeingHeld.id);
         }
         return returnListOfQuestions;
     }
-
+/*
     public HashMap<Integer, Distance> createHashMapOfQuestionsWithMinDistance(Point2D.Double center) {
         HashMap<Integer, Distance> HashMapOfMinDistancesForQuestion = new HashMap<Integer, Distance>();
         QuoraData question;
@@ -345,7 +359,7 @@ public class Solution {
             question = this.questionsFromInputArray[k];
             calculatedDistance = Math.sqrt((question.cords.getX() - center.getX()) * (question.cords.getX() - center.getX()) + (question.cords.getY() - center.getY()) * (question.cords.getY() - center.getY()));
             if(HashMapOfMinDistancesForQuestion.containsKey(question.id)) {
-                if(HashMapOfMinDistancesForQuestion.get(question.id).distance > calculatedDistance) {
+                if(HashMapOfMinDistancesForQuestion.get(question.id).minDistance > calculatedDistance) {
                     HashMapOfMinDistancesForQuestion.put(question.id, new Distance(calculatedDistance, question));
                 }
             } else {
@@ -355,7 +369,7 @@ public class Solution {
 
         return HashMapOfMinDistancesForQuestion;
     }
-
+/*
     public Distance[] getUnorderedArrayOfData(Point2D.Double center, Boolean isAQuestion) {
         Double calculatedDistance;
         Distance[] unorderedArray;
@@ -380,7 +394,7 @@ public class Solution {
                     HashMapOfMinDistancesForQuestion.put(question.id, new Distance(calculatedDistance, question));
                 }
             }
-            */
+
             HashMapOfMinDistancesForQuestion = createHashMapOfQuestionsWithMinDistance(center);
             for(Map.Entry<Integer, Distance> entry : HashMapOfMinDistancesForQuestion.entrySet()){
                 unorderedArray[dataAddSoFar]=entry.getValue();
@@ -397,7 +411,8 @@ public class Solution {
         }
         return  Arrays.copyOf(unorderedArray,dataAddSoFar);
     }
-
+    */
+/*
     public List<Distance> calculateTopicDistances3(Point2D.Double center, Integer kthSmallest,Boolean question) {
         List<Distance> returnList = new ArrayList<Distance>();
         Distance[] unorderedArray = new Distance[this.topicsFromInput.size()];
@@ -406,14 +421,14 @@ public class Solution {
         kthSmallestDistance =selectKth(unorderedArray,kthSmallest);
 
         for(int w=0; w<unorderedArray.length; w ++) {
-            if(unorderedArray[w].distance<=kthSmallestDistance.distance) {
+            if(unorderedArray[w].minDistance<=kthSmallestDistance.minDistance) {
                 returnList.add(unorderedArray[w]);
             }
         }
         Collections.sort(returnList);
         return returnList;
     }
-
+*/
     public static Distance selectKth(Distance[] arr, int k) {
         if (arr == null )
             throw new Error();
@@ -423,10 +438,10 @@ public class Solution {
         // if from == to we reached the kth element
         while (from < to) {
             Integer r = from, w = to;
-            Double mid = arr[(r + w) / 2].distance;
+            Double mid = arr[(r + w) / 2].minDistance;
             // stop if the reader and writer meets
             while (r < w) {
-                if (arr[r].distance >= mid) { // put the large values at the end
+                if (arr[r].minDistance >= mid) { // put the large values at the end
                     Distance tmp = arr[w];
                     arr[w] = arr[r];
                     arr[r] = tmp;
@@ -436,7 +451,7 @@ public class Solution {
                 }
             }
             // if we stepped up (r++) we need to step one down
-            if (arr[r].distance > mid)
+            if (arr[r].minDistance > mid)
                 r--;
             // the r pointer is on the end of the first k elements
             if (k <= r) {
@@ -482,12 +497,17 @@ public class Solution {
     public class QuoraData implements Comparable<QuoraData>{
         Integer id;
         Point2D.Double cords;
+        List<QuoraData> otherData;
         public int compareTo(QuoraData other) {
             return other.id.compareTo(id);
         }
         QuoraData(Integer id, Double x, Double y) {
             this.id = id;
             this.cords = new Point2D.Double(x,y);
+        }
+        QuoraData(Integer id, List<QuoraData> otherData) {
+            this.id = id;
+            this.otherData = otherData;
         }
     }
 
@@ -504,18 +524,41 @@ public class Solution {
     }
 
     public class Distance implements Comparable<Distance>{
-        Double distance;
+        Double minDistance;
         QuoraData dataBeingHeld;
+        Point2D.Double center;
 
-        Distance(Double distance, QuoraData dataToHold) {
-            this.distance =distance;
+        Distance(QuoraData dataToHold) {
             this.dataBeingHeld = dataToHold;
         }
         public int compareTo(Distance other)
         {
-            if (Math.abs(distance-other.distance)<=0.001)
+            if (Math.abs(minDistance-other.minDistance)<=0.001)
                 return other.dataBeingHeld.id.compareTo(dataBeingHeld.id);
-            return distance.compareTo(other.distance);
+            return minDistance.compareTo(other.minDistance);
+        }
+
+        public void setCenter(Point2D.Double center) {
+            this.center = center;
+            calculateMinDistance();
+        }
+
+        private void calculateMinDistance() {
+            Double tempMin;
+            this.minDistance = null;
+            if(dataBeingHeld.otherData == null) {
+                this.minDistance = Math.sqrt((dataBeingHeld.cords.getX() - center.getX()) * (dataBeingHeld.cords.getX() - center.getX()) + (dataBeingHeld.cords.getY() - center.getY()) * (dataBeingHeld.cords.getY() - center.getY()))   ;
+            } else {
+                for(QuoraData data: dataBeingHeld.otherData) {
+                    tempMin = Math.sqrt((data.cords.getX() - center.getX()) * (data.cords.getX() - center.getX()) + (data.cords.getY() - center.getY()) * (data.cords.getY() - center.getY()));
+                    if(  this.minDistance == null) {
+                        this.minDistance = tempMin;
+                    } else if(tempMin< minDistance ) {
+                        this.minDistance = tempMin;
+                    }
+                }
+            }
+
         }
 
     }
