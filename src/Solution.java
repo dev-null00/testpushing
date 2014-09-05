@@ -163,13 +163,16 @@ public class Solution {
                 }
                 id = Integer.parseInt(splitQuestionLine[0]);
                 if(!questionsFromInput.containsKey(id)) {
-                    List<QuoraData> otherData = new ArrayList<QuoraData>();
-                    otherData.add(this.topicsFromInput.get(topicForThisQuestion));
+                    //List<QuoraData> otherData = new ArrayList<QuoraData>();
+                    QuoraData[] otherData = new QuoraData[splitQuestionLine.length-2];
+                    otherData[0]=this.topicsFromInput.get(topicForThisQuestion);
+                    //questionsFromInput.put(id, new QuoraData(id ,otherData));
                     questionsFromInput.put(id, new QuoraData(id ,otherData));
                     questionsFromInputArray[questionsSoFar] =questionsFromInput.get(id);
                     questionsSoFar++;
                 } else {
-                    questionsFromInput.get(id).otherData.add(this.topicsFromInput.get(topicForThisQuestion));
+                    //questionsFromInput.get(id).otherData.add(this.topicsFromInput.get(topicForThisQuestion));
+                    questionsFromInput.get(id).otherData[i-2]=this.topicsFromInput.get(topicForThisQuestion);
                 }
             }
         }
@@ -287,6 +290,25 @@ public class Solution {
         }
     }
 
+    public List<Integer> returnTheList(QuoraData kthSmallestDistance, Integer numberToReturn) {
+        List<Integer> returnList = new ArrayList<Integer>();
+        List<QuoraData> kSmallestDistances = new ArrayList<QuoraData>();
+
+        for(int w=0; w<this.topicsFromInputArray.length; w ++) {
+            if(this.topicsFromInputArray[w].minDistance<=kthSmallestDistance.minDistance) {
+                kSmallestDistances.add(this.topicsFromInputArray[w]);
+            }
+        }
+        Collections.sort(kSmallestDistances);
+        if(kSmallestDistances.size()< numberToReturn) {
+            numberToReturn = kSmallestDistances.size();
+        }
+        for(int i=0; i<numberToReturn; i++) {
+            returnList.add(kSmallestDistances.get(i).id);
+        }
+        return returnList;
+    }
+
     public List<Integer> getClosestTopics(Integer numberToReturn, Point2D.Double center) {
         List<Integer> returnListOfTopics = new ArrayList<Integer>();
         List<QuoraData> kSmallestDistances = new ArrayList<QuoraData>();
@@ -299,7 +321,7 @@ public class Solution {
 
         QuoraData kthSmallestDistance;
         kthSmallestDistance =selectKth(this.topicsFromInputArray,numberToReturn);
-
+/*
         for(int w=0; w<this.topicsFromInputArray.length; w ++) {
             if(this.topicsFromInputArray[w].minDistance<=kthSmallestDistance.minDistance) {
                 kSmallestDistances.add(this.topicsFromInputArray[w]);
@@ -312,7 +334,9 @@ public class Solution {
         for(int i=0; i<numberToReturn; i++) {
             returnListOfTopics.add(kSmallestDistances.get(i).id);
         }
-
+*/
+        //return returnListOfTopics;
+        returnListOfTopics = returnTheList(kthSmallestDistance,numberToReturn);
         return returnListOfTopics;
     }
 
@@ -413,7 +437,8 @@ public class Solution {
     public class QuoraData implements Comparable<QuoraData>, Distance{
         Integer id;
         Point2D.Double cords;
-        List<QuoraData> otherData;
+        //List<QuoraData> otherData;
+        QuoraData[] otherData;
         Double minDistance;
         //QuoraData dataBeingHeld;
         Point2D.Double center;
@@ -428,7 +453,7 @@ public class Solution {
             this.id = id;
             this.cords = new Point2D.Double(x,y);
         }
-        QuoraData(Integer id, List<QuoraData> otherData) {
+        QuoraData(Integer id, QuoraData[] otherData) {
             this.id = id;
             this.otherData = otherData;
         }
@@ -440,10 +465,10 @@ public class Solution {
 
         public void cal() {
             Double tempMin;
-            Integer totalTopics = otherData.size();
+            Integer totalTopics = otherData.length;
             for(int i = 0; i < totalTopics; i++) {
                 //QuoraData data: dataBeingHeld.otherData) {
-                tempMin = Math.sqrt((otherData.get(i).cords.getX() - center.getX()) * (otherData.get(i).cords.getX() - center.getX()) + (otherData.get(i).cords.getY() - center.getY()) * (otherData.get(i).cords.getY() - center.getY()));
+                tempMin = Math.sqrt((otherData[i].cords.getX() - center.getX()) * (otherData[i].cords.getX() - center.getX()) + (otherData[i].cords.getY() - center.getY()) * (otherData[i].cords.getY() - center.getY()));
                 if(  this.minDistance == null) {
                     this.minDistance = tempMin;
                 } else if(tempMin< minDistance ) {
