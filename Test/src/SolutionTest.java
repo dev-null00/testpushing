@@ -892,5 +892,4 @@ public class SolutionTest {
             testInput.runQueries();
         }
     }
-
 }
